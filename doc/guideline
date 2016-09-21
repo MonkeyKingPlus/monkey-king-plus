@@ -1,0 +1,5 @@
+命名规范:
+    文件夹的命名:小写字母开头,中划线("-")连接
+    文件的命名:首字母小写,对特定的类型使用后缀区分,如:xxx.service.js,xxx.action.js
+    class的命名:首字母全大写
+    自定义组件repository命名:mkp-xxxx-xxx
