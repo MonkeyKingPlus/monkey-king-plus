@@ -3,52 +3,20 @@ import {AppRegistry, Text, Navigator, View} from "react-native";
 let {NavigationBar}=Navigator;
 window.React = React;
 
-// const initialNavigationBarProps = {
-// 	routeMapper: {
-// 		LeftButton: (route, navigator, index, navState) => {
-// 			if (index > 0) {
-// 				if (route.renderLeftButton) {
-// 					return route.renderLeftButton(route, navigator, index, navState);
-// 				}
-//
-// 				return <Text style={{color: "white"}} onPress={event=> {
-// 					navigator.pop();
-// 				}}>Back</Text>
-// 			}
-// 			return null;
-// 		},
-// 		RightButton: (route, navigator, index, navState) =>null,
-// 		Title: (route, navigator, index, navState) => {
-// 			return <Text style={{color: "white"}}>{route.title}</Text>;
-// 		}
-// 	},
-// 	style: {
-// 		backgroundColor: "black"
-// 	}
-// }
-
-// const defaultNavigatorOps = {
-// 	navigationBar: <NavigationBar routeMapper={{
-// 		LeftButton: (route, navigator, index, navState) =>null,
-// 		RightButton: (route, navigator, index, navState) =>null,
-// 		Title: (route, navigator, index, navState) =><Text style={{color: "white"}}>{route.title}</Text>
-// 	}}></NavigationBar>
-// };
-
 class Routes extends Component {
 	constructor(props) {
 		super(props);
 		this.initialRoute = props.routes[0];
-		// this.currentRoute = this.initialRoute;
+		this.currentRoute = this.initialRoute;
 		this.state = {
-			hideNavigationBar: this.initialRoute.hideNavigationBar || false,
-			navigationBarProps: this.buildNavigationBar(this.initialRoute)
+			hideNavigationBar: false
 		};
 	}
 
-	buildNavigationBar(route) {
+	buildNavigationBar() {
 		let defaultRenderLeftButton = this.props.renderLeftButton;
 		let defaultRenderTitle = this.props.renderTitle;
+		let defaultNavigationBarStyle = this.props.navigationBarStyle || {};
 		let navigationBarProps = {
 			routeMapper: {
 				LeftButton: (route, navigator, index, navState) => {
@@ -63,7 +31,12 @@ class Routes extends Component {
 					}
 					return null;
 				},
-				RightButton: (route, navigator, index, navState) =>null,
+				RightButton: (route, navigator, index, navState) =>{
+					if(route.renderRightButton){
+						return route.renderRightButton(route, navigator, index, navState);
+					}
+					return null;
+				},
 				Title: (route, navigator, index, navState) => {
 					if (route.renderTitle) {
 						return route.renderTitle(route, navigator, index, navState);
@@ -74,24 +47,41 @@ class Routes extends Component {
 					return <Text style={{color: "white"}}>{route.title}</Text>;
 				}
 			},
-			style: route.navigationBarStyle || this.props.navigationBarStyle || {}
+			style: defaultNavigationBarStyle
 		};
 		return navigationBarProps;
 	}
 
 
-	push(path) {
+	push(path,ops={}) {
 		let route = this.getRouteByPath(path);
-		this.refs.navigator.push(route);
+		this.refs.navigator.push({
+			...route,
+			...ops
+		});
 	}
 
 	pop() {
 		this.refs.navigator.pop();
 	}
 
-	replace(path) {
+	replace(path,ops={}) {
 		let route = this.getRouteByPath(path);
-		this.refs.navigator.replace(route);
+		this.refs.navigator.replace({
+			...route,
+			...ops
+		});
+	}
+
+	toggleNavigationBar(value) {
+		console.log("toggle value : ", value);
+		if (value !== null && typeof value !== "undefined") {
+			this.setState({hideNavigationBar: !value});
+		}
+		else {
+			let toggleValue = !this.hideNavigationBar;
+			this.setState({hideNavigationBar: toggleValue});
+		}
 	}
 
 	getRouteByPath(path) {
@@ -129,17 +119,16 @@ class Routes extends Component {
 	}
 
 	render() {
-		console.log("Routes render ...");
 		return (
 			<Navigator initialRoute={this.initialRoute}
 					   ref="navigator"
 					   navigationBar={this.state.hideNavigationBar ? null :
-						   <NavigationBar {...this.state.navigationBarProps}/>}
+						   <NavigationBar {...this.buildNavigationBar()}/>}
 					   configureScene={(route, routeStack)=> {
 						   return Navigator.SceneConfigs.HorizontalSwipeJumpFromRight;
 					   }}
 					   renderScene={(route, navigator)=> {
-						   console.log("render scene ...");
+						   this.currentRoute = route;
 						   if (route.onEnter) {
 							   let needRenderComponent = route.onEnter(route);
 							   if (!needRenderComponent) {
@@ -150,7 +139,6 @@ class Routes extends Component {
 								   navigator: this
 							   });
 						   }
-						   console.log("current route : ", route);
 						   return React.cloneElement(route.component, {
 							   route: route,
 							   navigator: this
@@ -168,12 +156,32 @@ class Home extends Component {
 		};
 	}
 
+	componentDidMount() {
+		console.log("home did mount");
+		//this.props.navigator.toggleNavigationBar();
+	}
+
 	render() {
 		return (
 			<View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 				<Text onPress={event=> {
-					this.props.navigator.push("register");
+					this.props.navigator.push("register",{
+						renderRightButton:()=>{
+							return <Text style={{color:"white"}}>ADD</Text>
+						}
+					});
 				}}>go register</Text>
+				<Text onPress={event=> {
+					this.props.navigator.toggleNavigationBar(true);
+				}}>show navigation bar</Text>
+				<Text onPress={event=> {
+					this.props.navigator.toggleNavigationBar(false);
+				}}>hide navigation bar</Text>
+				<Text onPress={event=> {
+					this.props.navigator.refresh({
+						title:"New Title"
+					});
+				}}>set title</Text>
 				<Text onPress={event=> {
 					this.props.navigator.refresh({
 						title: "New Home"
@@ -192,6 +200,12 @@ class Home extends Component {
 }
 
 class RegisterStep1 extends Component {
+
+	// componentDidMount(){
+	// 	this.props.navigator.refresh({
+	// 		title:"test"
+	// 	})
+	// }
 
 	render() {
 		return (
@@ -222,7 +236,6 @@ export default class Bootstrap extends Component {
 	render() {
 		return (
 			<Routes renderTitle={(route)=> {
-				console.log("render title : ", route.title);
 				return <Text style={{color: "white"}}>{route.title}</Text>;
 			}}
 					renderLeftButton={(route, navigator, index)=> {
