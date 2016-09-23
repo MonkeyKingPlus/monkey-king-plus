@@ -2,12 +2,37 @@ import React, {Component, PropTypes} from "react";
 import {AppRegistry, Text, Navigator, View} from "react-native";
 let {NavigationBar}=Navigator;
 window.React = React;
-
-class Routes extends Component {
+/*
+* react native router
+*
+* renderTitle:{function(route, navigator, index, navState)}
+* renderLeftButton:{function(route, navigator, index, navState)}
+* navigationBarStyle:{object}
+* routes:{array}
+* 	item:{
+*       path:{string}
+*       ,title:{string}
+*       ,renderLeftButton:{function}
+*       ,renderRightButton:{function}
+*       ,renderTitle:{function}
+*       ,hideNavigationBar:{boolean}
+*       ,navigationBarStyle:{object}
+* 	}
+*
+* scene有两个属性props.navigator,props.route
+* props.navigator.push
+* props.navigator.pop
+* props.navigator.replace
+* props.navigator.refresh 此方法不能在Component的生命周期中调用
+*
+*
+* */
+class Router extends Component {
 	constructor(props) {
 		super(props);
 		this.initialRoute = props.routes[0];
 		this.currentRoute = this.initialRoute;
+		this.refreshRouter=false;
 		this.state = {
 			hideNavigationBar: false
 		};
@@ -84,16 +109,15 @@ class Routes extends Component {
 		this.refs.navigator.replace(route);
 	}
 
-	// toggleNavigationBar(value) {
-	// 	console.log("toggle value : ", value);
-	// 	if (value !== null && typeof value !== "undefined") {
-	// 		this.setState({hideNavigationBar: !value});
-	// 	}
-	// 	else {
-	// 		let toggleValue = !this.hideNavigationBar;
-	// 		this.setState({hideNavigationBar: toggleValue});
-	// 	}
-	// }
+	refresh(ops={}){
+		console.log("refresh")
+		let route={
+			...this.currentRoute,
+			...ops
+		};
+		this.updateNavigationBarVisible(route.hideNavigationBar);
+		this.refs.navigator.replace(route);
+	}
 
 	getRouteByPath(path) {
 		let pathNames = path.split("/");
@@ -119,6 +143,7 @@ class Routes extends Component {
 	}
 
 	render() {
+		console.log("render Router");
 		return (
 			<Navigator initialRoute={this.initialRoute}
 					   ref="navigator"
@@ -128,6 +153,7 @@ class Routes extends Component {
 						   return Navigator.SceneConfigs.HorizontalSwipeJumpFromRight;
 					   }}
 					   renderScene={(route, navigator)=> {
+					   	console.log("render Scene");
 						   this.currentRoute = route;
 						   if (route.onEnter) {
 							   let needRenderComponent = route.onEnter(route);
@@ -154,11 +180,6 @@ class Home extends Component {
 		this.state = {
 			count: 0
 		};
-	}
-
-	componentDidMount() {
-		console.log("home did mount");
-		//this.props.navigator.toggleNavigationBar();
 	}
 
 	render() {
@@ -206,7 +227,9 @@ class RegisterStep1 extends Component {
 			<View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 
 				<Text onPress={event=> {
-					this.props.navigator.push("register/step2");
+					this.props.navigator.push("register/step2",{
+						message:"我是来自注册第一步的参数"
+					});
 				}}>go to register step2</Text>
 			</View>
 		);
@@ -221,6 +244,24 @@ class RegisterStep2 extends Component {
 				<Text onPress={event=> {
 					this.props.navigator.pop();
 				}}>back</Text>
+				<Text>{this.props.route.message}</Text>
+				<Text onPress={event=>{
+					this.props.navigator.refresh({
+						hideNavigationBar:false
+					});
+				}}>show navigation bar</Text>
+				<Text onPress={event=>{
+					this.props.navigator.refresh({
+						renderRightButton:()=>{
+							return <Text style={{color:"white"}}>REGISTER</Text>
+						}
+					});
+				}}>show right button</Text>
+				<Text onPress={event=>{
+					this.props.navigator.refresh({
+						renderRightButton:null
+					});
+				}}>hide right button</Text>
 			</View>
 		);
 	}
@@ -229,13 +270,13 @@ class RegisterStep2 extends Component {
 export default class Bootstrap extends Component {
 	render() {
 		return (
-			<Routes renderTitle={(route)=> {
+			<Router ref="router" renderTitle={(route)=> {
 				return <Text style={{color: "white"}}>{route.title}</Text>;
 			}}
 					renderLeftButton={(route, navigator, index)=> {
 						if (index > 0) {
 							return <Text style={{color: "white"}} onPress={event=> {
-								navigator.pop();
+								this.refs.router.pop();
 							}}>back</Text>
 						}
 						return null;
@@ -267,7 +308,7 @@ export default class Bootstrap extends Component {
 							hideNavigationBar: true,
 							component: <RegisterStep2/>
 						}]
-					}]}></Routes>
+					}]}></Router>
 		);
 	}
 }
