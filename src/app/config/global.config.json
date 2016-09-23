@@ -1,0 +1,5 @@
+{
+	"env":"development"	    //development,production
+	,"development":{}
+	,"production":{}
+}
