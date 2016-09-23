@@ -31,8 +31,8 @@ class Routes extends Component {
 					}
 					return null;
 				},
-				RightButton: (route, navigator, index, navState) =>{
-					if(route.renderRightButton){
+				RightButton: (route, navigator, index, navState) => {
+					if (route.renderRightButton) {
 						return route.renderRightButton(route, navigator, index, navState);
 					}
 					return null;
@@ -52,37 +52,48 @@ class Routes extends Component {
 		return navigationBarProps;
 	}
 
+	updateNavigationBarVisible(hideNavigationBar = false) {
+		if (hideNavigationBar !== this.state.hideNavigationBar) {
+			this.setState({hideNavigationBar: hideNavigationBar});
+		}
+	}
 
-	push(path,ops={}) {
-		let route = this.getRouteByPath(path);
-		this.refs.navigator.push({
-			...route,
+	push(path, ops = {}) {
+		let route = {
+			...this.getRouteByPath(path),
 			...ops
-		});
+		};
+		this.updateNavigationBarVisible(route.hideNavigationBar);
+		this.refs.navigator.push(route);
+
 	}
 
 	pop() {
+		let routes=this.refs.navigator.getCurrentRoutes();
+		let route=routes[routes.length-2];
+		this.updateNavigationBarVisible(route.hideNavigationBar);
 		this.refs.navigator.pop();
 	}
 
-	replace(path,ops={}) {
-		let route = this.getRouteByPath(path);
-		this.refs.navigator.replace({
-			...route,
+	replace(path, ops = {}) {
+		let route = {
+			...this.getRouteByPath(path),
 			...ops
-		});
+		};
+		this.updateNavigationBarVisible(route.hideNavigationBar);
+		this.refs.navigator.replace(route);
 	}
 
-	toggleNavigationBar(value) {
-		console.log("toggle value : ", value);
-		if (value !== null && typeof value !== "undefined") {
-			this.setState({hideNavigationBar: !value});
-		}
-		else {
-			let toggleValue = !this.hideNavigationBar;
-			this.setState({hideNavigationBar: toggleValue});
-		}
-	}
+	// toggleNavigationBar(value) {
+	// 	console.log("toggle value : ", value);
+	// 	if (value !== null && typeof value !== "undefined") {
+	// 		this.setState({hideNavigationBar: !value});
+	// 	}
+	// 	else {
+	// 		let toggleValue = !this.hideNavigationBar;
+	// 		this.setState({hideNavigationBar: toggleValue});
+	// 	}
+	// }
 
 	getRouteByPath(path) {
 		let pathNames = path.split("/");
@@ -104,17 +115,6 @@ class Routes extends Component {
 		if (!route) {
 			throw new Error(`route not found , path = ${path}`);
 		}
-		// else {
-		// 	if (!route.component && route.routes && route.routes.length > 0) {
-		// 		if (route.routes && route.routes.length > 0) {
-		// 			route = route.routes[0];
-		// 		}
-		// 		else {
-		// 			throw new Error(`${route.path} find nothing child route`);
-		// 		}
-		// 	}
-		//
-		// }
 		return route;
 	}
 
@@ -165,9 +165,9 @@ class Home extends Component {
 		return (
 			<View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 				<Text onPress={event=> {
-					this.props.navigator.push("register",{
-						renderRightButton:()=>{
-							return <Text style={{color:"white"}}>ADD</Text>
+					this.props.navigator.push("register", {
+						renderRightButton: ()=> {
+							return <Text style={{color: "white"}}>ADD</Text>
 						}
 					});
 				}}>go register</Text>
@@ -179,7 +179,7 @@ class Home extends Component {
 				}}>hide navigation bar</Text>
 				<Text onPress={event=> {
 					this.props.navigator.refresh({
-						title:"New Title"
+						title: "New Title"
 					});
 				}}>set title</Text>
 				<Text onPress={event=> {
@@ -200,12 +200,6 @@ class Home extends Component {
 }
 
 class RegisterStep1 extends Component {
-
-	// componentDidMount(){
-	// 	this.props.navigator.refresh({
-	// 		title:"test"
-	// 	})
-	// }
 
 	render() {
 		return (
