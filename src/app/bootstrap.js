@@ -2,40 +2,89 @@ import React, {Component, PropTypes} from "react";
 import {AppRegistry, Text, Navigator, View} from "react-native";
 let {NavigationBar}=Navigator;
 window.React = React;
+
+class NavigationBarEx extends NavigationBar {
+	get currentRoute() {
+		let routes = this.props.navState.routeStack;
+		if (routes.length && routes.length > 0) {
+			return Object.assign({},routes[routes.length - 1]);
+		}
+		return null;
+	}
+
+	render() {
+		console.log("render header : ", this.props);
+		console.log("current route : ", this.currentRoute);
+		if (this.currentRoute && this.currentRoute.hideNavigationBar) {
+			return null;
+		}
+		return super.render();
+	}
+
+	refresh(ops={}){
+		let routes = this.props.navState.routeStack;
+		let route=routes[routes.length-1];
+		routes[routes.length-1]=Object.assign({},route,ops);
+		this.forceUpdate();
+	}
+}
+
+// class NavigatorEx extends Navigator {
+// 	get currentRoute() {
+// 		let routes = this.state.routeStack;
+// 		if (routes.length && routes.length > 0) {
+// 			return Object.assign({}, routes[routes.length - 1]);
+// 		}
+// 		return null;
+// 	}
+//
+// 	refresh(ops) {
+// 		let newRoute = Object.assign({}, this.currentRoute, ops);
+// 		var nextRouteStack = this.state.routeStack.slice();
+// 		var nextAnimationModeStack = this.state.sceneConfigStack.slice();
+// 		nextRouteStack[nextRouteStack.length - 1] = newRoute;
+// 		nextAnimationModeStack[nextAnimationModeStack.length - 1] = this.props.configureScene(newRoute, nextRouteStack);
+// 		this.setState({
+// 			routeStack: nextRouteStack,
+// 			sceneConfigStack: nextAnimationModeStack
+// 		});
+// 	}
+// }
+
 /*
-* react native router
-*
-* renderTitle:{function(route, navigator, index, navState)}
-* renderLeftButton:{function(route, navigator, index, navState)}
-* navigationBarStyle:{object}
-* routes:{array}
-* 	item:{
-*       path:{string}
-*       ,title:{string}
-*       ,renderLeftButton:{function}
-*       ,renderRightButton:{function}
-*       ,renderTitle:{function}
-*       ,hideNavigationBar:{boolean}
-*       ,navigationBarStyle:{object}
-* 	}
-*
-* scene有两个属性props.navigator,props.route
-* props.navigator.push
-* props.navigator.pop
-* props.navigator.replace
-* props.navigator.refresh 此方法不能在Component的生命周期中调用
-*
-*
-* */
+ * react native router
+ *
+ * renderTitle:{function(route, navigator, index, navState)}
+ * renderLeftButton:{function(route, navigator, index, navState)}
+ * navigationBarStyle:{object}
+ * routes:{array}
+ * 	item:{
+ *       path:{string}
+ *       ,title:{string}
+ *       ,renderLeftButton:{function}
+ *       ,renderRightButton:{function}
+ *       ,renderTitle:{function}
+ *       ,hideNavigationBar:{boolean}
+ *       ,navigationBarStyle:{object}
+ *       ,routes:{array}
+ *       ,onEnter:{function}
+ *       ,onLeave:{function}
+ * 	}
+ *
+ * scene有两个属性props.navigator,props.route
+ * props.navigator.push
+ * props.navigator.pop
+ * props.navigator.replace
+ * props.navigator.refreshNavBar
+ *
+ *
+ * */
 class Router extends Component {
 	constructor(props) {
 		super(props);
 		this.initialRoute = props.routes[0];
 		this.currentRoute = this.initialRoute;
-		this.refreshRouter=false;
-		this.state = {
-			hideNavigationBar: false
-		};
+		this.navigationBarEx=<NavigationBarEx ref="navigationBar" {...this.buildNavigationBar()}/>;
 	}
 
 	buildNavigationBar() {
@@ -45,6 +94,7 @@ class Router extends Component {
 		let navigationBarProps = {
 			routeMapper: {
 				LeftButton: (route, navigator, index, navState) => {
+					console.log("render left button");
 					if (index > 0) {
 						if (route.renderLeftButton) {
 							return route.renderLeftButton(route, navigator, index, navState);
@@ -57,12 +107,14 @@ class Router extends Component {
 					return null;
 				},
 				RightButton: (route, navigator, index, navState) => {
+					console.log("render right button");
 					if (route.renderRightButton) {
 						return route.renderRightButton(route, navigator, index, navState);
 					}
 					return null;
 				},
 				Title: (route, navigator, index, navState) => {
+					console.log("render title");
 					if (route.renderTitle) {
 						return route.renderTitle(route, navigator, index, navState);
 					}
@@ -77,26 +129,16 @@ class Router extends Component {
 		return navigationBarProps;
 	}
 
-	updateNavigationBarVisible(hideNavigationBar = false) {
-		if (hideNavigationBar !== this.state.hideNavigationBar) {
-			this.setState({hideNavigationBar: hideNavigationBar});
-		}
-	}
-
 	push(path, ops = {}) {
 		let route = {
 			...this.getRouteByPath(path),
 			...ops
 		};
-		this.updateNavigationBarVisible(route.hideNavigationBar);
 		this.refs.navigator.push(route);
 
 	}
 
 	pop() {
-		let routes=this.refs.navigator.getCurrentRoutes();
-		let route=routes[routes.length-2];
-		this.updateNavigationBarVisible(route.hideNavigationBar);
 		this.refs.navigator.pop();
 	}
 
@@ -105,18 +147,13 @@ class Router extends Component {
 			...this.getRouteByPath(path),
 			...ops
 		};
-		this.updateNavigationBarVisible(route.hideNavigationBar);
 		this.refs.navigator.replace(route);
 	}
 
-	refresh(ops={}){
-		console.log("refresh")
-		let route={
-			...this.currentRoute,
-			...ops
-		};
-		this.updateNavigationBarVisible(route.hideNavigationBar);
-		this.refs.navigator.replace(route);
+	refreshNavBar(ops = {}) {
+		setTimeout(()=>{
+			this.refs.navigator._navBar.refresh(ops);
+		},1);
 	}
 
 	getRouteByPath(path) {
@@ -146,30 +183,29 @@ class Router extends Component {
 		console.log("render Router");
 		return (
 			<Navigator initialRoute={this.initialRoute}
-					   ref="navigator"
-					   navigationBar={this.state.hideNavigationBar ? null :
-						   <NavigationBar {...this.buildNavigationBar()}/>}
-					   configureScene={(route, routeStack)=> {
-						   return Navigator.SceneConfigs.HorizontalSwipeJumpFromRight;
-					   }}
-					   renderScene={(route, navigator)=> {
-					   	console.log("render Scene");
-						   this.currentRoute = route;
-						   if (route.onEnter) {
-							   let needRenderComponent = route.onEnter(route);
-							   if (!needRenderComponent) {
-								   throw  new Error(`${route.path} must return a available component when fire onEnter`);
-							   }
-							   return React.cloneElement(needRenderComponent, {
-								   route: route,
-								   navigator: this
-							   });
-						   }
-						   return React.cloneElement(route.component, {
-							   route: route,
-							   navigator: this
-						   });
-					   }}></Navigator>
+						 ref="navigator"
+						 navigationBar={this.navigationBarEx}
+						 configureScene={(route, routeStack)=> {
+							 return Navigator.SceneConfigs.HorizontalSwipeJumpFromRight;
+						 }}
+						 renderScene={(route, navigator)=> {
+							 console.log("render Scene");
+							 this.currentRoute = route;
+							 if (route.onEnter) {
+								 let needRenderComponent = route.onEnter(route);
+								 if (!needRenderComponent) {
+									 throw  new Error(`${route.path} must return a available component when fire onEnter`);
+								 }
+								 return React.cloneElement(needRenderComponent, {
+									 route: route,
+									 navigator: this
+								 });
+							 }
+							 return React.cloneElement(route.component, {
+								 route: route,
+								 navigator: this
+							 });
+						 }}></Navigator>
 		);
 	}
 }
@@ -180,6 +216,11 @@ class Home extends Component {
 		this.state = {
 			count: 0
 		};
+		console.log("init home");
+	}
+
+	componentDidMount() {
+		console.log("home did mount");
 	}
 
 	render() {
@@ -193,18 +234,22 @@ class Home extends Component {
 					});
 				}}>go register</Text>
 				<Text onPress={event=> {
-					this.props.navigator.toggleNavigationBar(true);
+					this.props.navigator.refreshNavBar({
+						hideNavigationBar: false
+					});
 				}}>show navigation bar</Text>
 				<Text onPress={event=> {
-					this.props.navigator.toggleNavigationBar(false);
+					this.props.navigator.refreshNavBar({
+						hideNavigationBar: true
+					});
 				}}>hide navigation bar</Text>
 				<Text onPress={event=> {
-					this.props.navigator.refresh({
+					this.props.navigator.refreshNavBar({
 						title: "New Title"
 					});
 				}}>set title</Text>
 				<Text onPress={event=> {
-					this.props.navigator.refresh({
+					this.props.navigator.refreshNavBar({
 						title: "New Home"
 					});
 				}}>refresh</Text>
@@ -222,15 +267,32 @@ class Home extends Component {
 
 class RegisterStep1 extends Component {
 
+	constructor(props) {
+		super(props);
+		console.log("init register step1");
+	}
+
+	componentDidMount() {
+		this.props.navigator.refreshNavBar({
+			title:"abc"
+		});
+		console.log("did mount");
+	}
+
 	render() {
 		return (
 			<View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 
 				<Text onPress={event=> {
-					this.props.navigator.push("register/step2",{
-						message:"我是来自注册第一步的参数"
+					this.props.navigator.push("register/step2", {
+						message: "我是来自注册第一步的参数"
 					});
 				}}>go to register step2</Text>
+				<Text onPress={event=> {
+					this.props.navigator.refreshNavBar({
+						hideNavigationBar: true
+					});
+				}}>hide navigation bar</Text>
 			</View>
 		);
 	}
@@ -245,21 +307,21 @@ class RegisterStep2 extends Component {
 					this.props.navigator.pop();
 				}}>back</Text>
 				<Text>{this.props.route.message}</Text>
-				<Text onPress={event=>{
-					this.props.navigator.refresh({
-						hideNavigationBar:false
+				<Text onPress={event=> {
+					this.props.navigator.refreshNavBar({
+						hideNavigationBar: false
 					});
 				}}>show navigation bar</Text>
-				<Text onPress={event=>{
-					this.props.navigator.refresh({
-						renderRightButton:()=>{
-							return <Text style={{color:"white"}}>REGISTER</Text>
+				<Text onPress={event=> {
+					this.props.navigator.refreshNavBar({
+						renderRightButton: ()=> {
+							return <Text style={{color: "white"}}>REGISTER</Text>
 						}
 					});
 				}}>show right button</Text>
-				<Text onPress={event=>{
-					this.props.navigator.refresh({
-						renderRightButton:null
+				<Text onPress={event=> {
+					this.props.navigator.refreshNavBar({
+						renderRightButton: null
 					});
 				}}>hide right button</Text>
 			</View>
@@ -282,18 +344,6 @@ export default class Bootstrap extends Component {
 						return null;
 					}}
 					navigationBarStyle={{backgroundColor: "black"}}
-				/*
-				 * {
-				 * 	path:{string}
-				 * 	,title:{string}
-				 *   ,renderLeftButton:{function}
-				 *	,renderRightButton:{function}
-				 *	,renderTitle:{function}
-				 *	,hideNavigationBar:{boolean}
-				 *	,navigationBarStyle:{object}
-				 * }
-				 *
-				 * */
 					routes={[{
 						path: "home",
 						title: "Home",
