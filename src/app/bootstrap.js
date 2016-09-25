@@ -29,27 +29,63 @@ class NavigationBarEx extends NavigationBar {
 	}
 }
 
-// class NavigatorEx extends Navigator {
-// 	get currentRoute() {
-// 		let routes = this.state.routeStack;
-// 		if (routes.length && routes.length > 0) {
-// 			return Object.assign({}, routes[routes.length - 1]);
-// 		}
-// 		return null;
-// 	}
-//
-// 	refresh(ops) {
-// 		let newRoute = Object.assign({}, this.currentRoute, ops);
-// 		var nextRouteStack = this.state.routeStack.slice();
-// 		var nextAnimationModeStack = this.state.sceneConfigStack.slice();
-// 		nextRouteStack[nextRouteStack.length - 1] = newRoute;
-// 		nextAnimationModeStack[nextAnimationModeStack.length - 1] = this.props.configureScene(newRoute, nextRouteStack);
-// 		this.setState({
-// 			routeStack: nextRouteStack,
-// 			sceneConfigStack: nextAnimationModeStack
-// 		});
-// 	}
-// }
+class NavigatorEx extends Navigator {
+	get currentRoute() {
+		let routes = this.state.routeStack;
+		if (routes.length && routes.length > 0) {
+			return Object.assign({}, routes[routes.length - 1]);
+		}
+		return null;
+	}
+
+	_findRouteByPath(path) {
+		let pathNames = path.split("/");
+		let route;
+		while (pathNames.length > 0) {
+			let pathName = pathNames.shift();
+			if (route) {
+				if (route.routes) {
+					route = route.routes.find(r=>r.path === pathName);
+				}
+				else {
+					throw new Error(`${route.path} not defined routes`);
+				}
+			}
+			else {
+				route = this.props.routes.find(r=>r.path === pathName);
+			}
+		}
+		if (!route) {
+			throw new Error(`route not found , path = ${path}`);
+		}
+		return route;
+	}
+
+
+	$push(path,ops={}){
+		let route = {
+			...this._findRouteByPath(path),
+			...ops
+		};
+		this.push(route);
+	}
+	$pop(){
+		this.pop();
+	}
+	$replace(path,ops={}){
+		let route = {
+			...this._findRouteByPath(path),
+			...ops
+		};
+		this.replace(route);
+	}
+	$refreshNavBar(ops={}){
+		setTimeout(()=>{
+			this._navBar.refresh(ops);
+		},1);
+	}
+
+}
 
 /*
  * react native router
@@ -72,10 +108,10 @@ class NavigationBarEx extends NavigationBar {
  * 	}
  *
  * scene有两个属性props.navigator,props.route
- * props.navigator.push
- * props.navigator.pop
- * props.navigator.replace
- * props.navigator.refreshNavBar
+ * props.navigator.$push
+ * props.navigator.$pop
+ * props.navigator.$replace
+ * props.navigator.$refreshNavBar
  *
  *
  * */
@@ -84,10 +120,10 @@ class Router extends Component {
 		super(props);
 		this.initialRoute = props.routes[0];
 		this.currentRoute = this.initialRoute;
-		this.navigationBarEx=<NavigationBarEx ref="navigationBar" {...this.buildNavigationBar()}/>;
+		this.navigationBarEx=<NavigationBarEx ref="navigationBar" {...this._buildNavigationBar()}/>;
 	}
 
-	buildNavigationBar() {
+	_buildNavigationBar() {
 		let defaultRenderLeftButton = this.props.renderLeftButton;
 		let defaultRenderTitle = this.props.renderTitle;
 		let defaultNavigationBarStyle = this.props.navigationBarStyle || {};
@@ -129,60 +165,11 @@ class Router extends Component {
 		return navigationBarProps;
 	}
 
-	push(path, ops = {}) {
-		let route = {
-			...this.getRouteByPath(path),
-			...ops
-		};
-		this.refs.navigator.push(route);
-
-	}
-
-	pop() {
-		this.refs.navigator.pop();
-	}
-
-	replace(path, ops = {}) {
-		let route = {
-			...this.getRouteByPath(path),
-			...ops
-		};
-		this.refs.navigator.replace(route);
-	}
-
-	refreshNavBar(ops = {}) {
-		setTimeout(()=>{
-			this.refs.navigator._navBar.refresh(ops);
-		},1);
-	}
-
-	getRouteByPath(path) {
-		let pathNames = path.split("/");
-		let route;
-		while (pathNames.length > 0) {
-			let pathName = pathNames.shift();
-			if (route) {
-				if (route.routes) {
-					route = route.routes.find(r=>r.path === pathName);
-				}
-				else {
-					throw new Error(`${route.path} not defined routes`);
-				}
-			}
-			else {
-				route = this.props.routes.find(r=>r.path === pathName);
-			}
-		}
-		if (!route) {
-			throw new Error(`route not found , path = ${path}`);
-		}
-		return route;
-	}
-
 	render() {
 		console.log("render Router");
 		return (
-			<Navigator initialRoute={this.initialRoute}
+			<NavigatorEx initialRoute={this.initialRoute}
+						 routes={this.props.routes}
 						 ref="navigator"
 						 navigationBar={this.navigationBarEx}
 						 configureScene={(route, routeStack)=> {
@@ -198,14 +185,14 @@ class Router extends Component {
 								 }
 								 return React.cloneElement(needRenderComponent, {
 									 route: route,
-									 navigator: this
+									 navigator: navigator
 								 });
 							 }
 							 return React.cloneElement(route.component, {
 								 route: route,
-								 navigator: this
+								 navigator: navigator
 							 });
-						 }}></Navigator>
+						 }}></NavigatorEx>
 		);
 	}
 }
@@ -227,34 +214,34 @@ class Home extends Component {
 		return (
 			<View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 				<Text onPress={event=> {
-					this.props.navigator.push("register", {
+					this.props.navigator.$push("register", {
 						renderRightButton: ()=> {
 							return <Text style={{color: "white"}}>ADD</Text>
 						}
 					});
 				}}>go register</Text>
 				<Text onPress={event=> {
-					this.props.navigator.refreshNavBar({
+					this.props.navigator.$refreshNavBar({
 						hideNavigationBar: false
 					});
 				}}>show navigation bar</Text>
 				<Text onPress={event=> {
-					this.props.navigator.refreshNavBar({
+					this.props.navigator.$refreshNavBar({
 						hideNavigationBar: true
 					});
 				}}>hide navigation bar</Text>
 				<Text onPress={event=> {
-					this.props.navigator.refreshNavBar({
+					this.props.navigator.$refreshNavBar({
 						title: "New Title"
 					});
 				}}>set title</Text>
 				<Text onPress={event=> {
-					this.props.navigator.refreshNavBar({
+					this.props.navigator.$refreshNavBar({
 						title: "New Home"
 					});
 				}}>refresh</Text>
 				<Text onPress={event=> {
-					this.props.navigator.replace("register");
+					this.props.navigator.$replace("register");
 				}}>replace</Text>
 				<Text>go account</Text>
 				<Text onPress={event=> {
@@ -273,7 +260,7 @@ class RegisterStep1 extends Component {
 	}
 
 	componentDidMount() {
-		this.props.navigator.refreshNavBar({
+		this.props.navigator.$refreshNavBar({
 			title:"abc"
 		});
 		console.log("did mount");
@@ -284,12 +271,12 @@ class RegisterStep1 extends Component {
 			<View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 
 				<Text onPress={event=> {
-					this.props.navigator.push("register/step2", {
+					this.props.navigator.$push("register/step2", {
 						message: "我是来自注册第一步的参数"
 					});
 				}}>go to register step2</Text>
 				<Text onPress={event=> {
-					this.props.navigator.refreshNavBar({
+					this.props.navigator.$refreshNavBar({
 						hideNavigationBar: true
 					});
 				}}>hide navigation bar</Text>
@@ -304,23 +291,23 @@ class RegisterStep2 extends Component {
 		return (
 			<View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 				<Text onPress={event=> {
-					this.props.navigator.pop();
+					this.props.navigator.$pop();
 				}}>back</Text>
 				<Text>{this.props.route.message}</Text>
 				<Text onPress={event=> {
-					this.props.navigator.refreshNavBar({
+					this.props.navigator.$refreshNavBar({
 						hideNavigationBar: false
 					});
 				}}>show navigation bar</Text>
 				<Text onPress={event=> {
-					this.props.navigator.refreshNavBar({
+					this.props.navigator.$refreshNavBar({
 						renderRightButton: ()=> {
 							return <Text style={{color: "white"}}>REGISTER</Text>
 						}
 					});
 				}}>show right button</Text>
 				<Text onPress={event=> {
-					this.props.navigator.refreshNavBar({
+					this.props.navigator.$refreshNavBar({
 						renderRightButton: null
 					});
 				}}>hide right button</Text>
@@ -338,7 +325,7 @@ export default class Bootstrap extends Component {
 					renderLeftButton={(route, navigator, index)=> {
 						if (index > 0) {
 							return <Text style={{color: "white"}} onPress={event=> {
-								this.refs.router.pop();
+								navigator.$pop();
 							}}>back</Text>
 						}
 						return null;
