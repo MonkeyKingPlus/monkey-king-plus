@@ -82,7 +82,7 @@ class NavigatorEx extends Navigator {
 	$refreshNavBar(ops={}){
 		setTimeout(()=>{
 			this._navBar.refresh(ops);
-		},1);
+		},128);
 	}
 
 }
@@ -263,6 +263,11 @@ class RegisterStep1 extends Component {
 		this.props.navigator.$refreshNavBar({
 			title:"abc"
 		});
+		// setTimeout(()=>{
+		// 	this.props.navigator.$refreshNavBar({
+		// 		title: "abc"
+		// 	});
+		// },1000);
 		console.log("did mount");
 	}
 
