@@ -54,12 +54,9 @@ var config = {
         "level": "DEBUG",
         "appenders": [
             {
-                "type": "console"
+                type: 'console'
             }
         ]
-    },
-    shh_service: {
-        "accessToken": "4af925054156423f8cf0e2ea028f9224"
     }
 };
 

@@ -54,12 +54,15 @@ var config = {
         "level": "DEBUG",
         "appenders": [
             {
-                "type": "console"
+                type: 'dateFile',
+                filename: 'logs/log_pattern',
+                pattern: "yyyyMMdd.log",
+                alwaysIncludePattern:true,
+                backups: 3,
+                maxLogSize: 1024,
+                category: 'service'
             }
         ]
-    },
-    shh_service: {
-        "accessToken": "4af925054156423f8cf0e2ea028f9224"
     }
 };
 

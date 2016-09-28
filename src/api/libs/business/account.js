@@ -1,6 +1,7 @@
 var accountDb = require('../db_conf/db_account.js');
 var db = require('../common/db_mysql_q.js')();
-var businessError = require('../common/businesserror.js');
+var businessError = require('../common/businesserror');
+var logger = require('../common/logger')("service");
 
 exports.test = function (id) {
     return db.executeSql(accountDb.test, [id]);
@@ -19,7 +20,7 @@ exports.insertTestWillRollback = function (name) {
                 })
         }
     ).fail(function (err) {
-        console.log(err);
+        logger.error(err);
         throw new businessError("操作异常,数据已回滚")
     })
 }
