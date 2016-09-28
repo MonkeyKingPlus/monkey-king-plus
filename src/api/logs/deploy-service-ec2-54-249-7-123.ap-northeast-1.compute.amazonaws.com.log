@@ -1,0 +1,94 @@
+Last login: Wed Sep 28 08:12:25 2016 from 101.204.218.191
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-ami/2016.03-release-notes/
+13 package(s) needed for security, out of 72 available
+Run "sudo yum update" to apply all updates.
+Amazon Linux version 2016.09 is available.
+[ec2-user@ip-172-31-27-103 ~]$ cd /home/ec2-user/mkp/srv
+[ec2-user@ip-172-31-27-103 srv]$ shopt -s extglob
+[ec2-user@ip-172-31-27-103 srv]$ rm -rf !(logs|node_modules|publish.zip)
+mv  service/public/faq.html service/public/faq_1.html
+sleep 15
+npm install --production
+pm2 startOrRestart pm2-service-test.json
+mv service/public/faq_1.html service/public/faq.html
+[ec2-user@ip-172-31-27-103 srv]$ unzip -o publish.zip -d dist
+sleep 15
+exit
+Archive:  publish.zip
+  inflating: dist/gulpfile.js        
+  inflating: dist/package.json       
+  inflating: dist/pm2-service-production.json  
+  inflating: dist/pm2-service-test.json  
+   creating: dist/config/
+   creating: dist/config/common/
+  inflating: dist/config/development.js  
+  inflating: dist/config/test.js     
+  inflating: dist/config/common/baidumap_city_code.json  
+  inflating: dist/config/common/business.js  
+  inflating: dist/config/common/image_size.js  
+  inflating: dist/config/common/marketing.js  
+  inflating: dist/libs/common/db/db_conf_gen.js  
+  inflating: dist/libs/common/db/db_conf_script.template  
+  inflating: dist/libs/common/log/log2service_appender.js  
+   creating: dist/libs/business/
+   creating: dist/libs/db_conf/
+  inflating: dist/libs/index.js      
+   creating: dist/libs/middleware/
+  inflating: dist/libs/business/account.js  
+  inflating: dist/libs/business/authorization.js  
+  inflating: dist/libs/common/businesserror.js  
+  inflating: dist/libs/common/config.js  
+  inflating: dist/libs/common/db_mysql_q.js  
+  inflating: dist/libs/common/enums.js  
+  inflating: dist/libs/common/helper.js  
+  inflating: dist/libs/common/idcard-validator.js  
+  inflating: dist/libs/common/logger.js  
+  inflating: dist/libs/common/mobile_device_mapHelper.js  
+  inflating: dist/libs/common/passport_user_recovery_strategy.js  
+  inflating: dist/libs/common/pinyinHelper.js  
+  inflating: dist/libs/common/validatorExtender.js  
+  inflating: dist/libs/db_conf/db_account.js  
+  inflating: dist/libs/middleware/analyzer_user_recovery.js  
+  inflating: dist/libs/middleware/auth_service.js  
+  inflating: dist/libs/middleware/device_id_express.js  
+  inflating: dist/libs/middleware/errorhandler_express.js  
+  inflating: dist/libs/middleware/express_extender.js  
+  inflating: dist/libs/middleware/setServerId.js  
+   creating: dist/service/
+  inflating: dist/service/app.js     
+   creating: dist/service/controllers/
+   creating: dist/service/public/
+   creating: dist/service/utils/
+  inflating: dist/service/controllers/account.js  
+  inflating: dist/service/controllers/error.js  
+  inflating: dist/service/controllers/index.js  
+  inflating: dist/service/controllers/login.js  
+  inflating: dist/service/public/faq.html  
+  inflating: dist/service/public/favicon.ico  
+[ec2-user@ip-172-31-27-103 srv]$ cp -rf dist/** .
+[ec2-user@ip-172-31-27-103 srv]$ rm -rf dist
+[ec2-user@ip-172-31-27-103 srv]$ rm publish.zip
+[ec2-user@ip-172-31-27-103 srv]$ mv  service/public/faq.html service/public/faq_ 1.html
+[ec2-user@ip-172-31-27-103 srv]$ sleep 15
+[ec2-user@ip-172-31-27-103 srv]$ npm install --production
+[ec2-user@ip-172-31-27-103 srv]$ pm2 startOrRestart pm2-service-test.json
+[33m[PM2][WARN] [39mYou should not use the cluster_mode (-i) in production, it's still a beta feature. A front HTTP load balancer or interaction with NGINX will be developed in the future.
+[32m[PM2] [39mApplying action restartProcessId on app [mkp-service](ids: 0,1)
+[32m[PM2] [39m[mkp-service](0) ✓
+[32m[PM2] [39m[mkp-service](1) ✓
+[90m┌─────────────[39m[90m┬────[39m[90m┬─────────[39m[90m┬──────[39m[90m┬────────[39m[90m┬─────────[39m[90m┬────────[39m[90m┬─────[39m[90m┬───────────[39m[90m┬──────────┐[39m
+[90m│[39m[1m[36m App name    [39m[22m[90m│[39m[1m[36m id [39m[22m[90m│[39m[1m[36m mode    [39m[22m[90m│[39m[1m[36m pid  [39m[22m[90m│[39m[1m[36m status [39m[22m[90m│[39m[1m[36m restart [39m[22m[90m│[39m[1m[36m uptime [39m[22m[90m│[39m[1m[36m cpu [39m[22m[90m│[39m[1m[36m mem       [39m[22m[90m│[39m[1m[36m watching [39m[22m[90m│[39m
+[90m├─────────────[39m[90m┼────[39m[90m┼─────────[39m[90m┼──────[39m[90m┼────────[39m[90m┼─────────[39m[90m┼────────[39m[90m┼─────[39m[90m┼───────────[39m[90m┼──────────┤[39m
+[90m│[39m [1m[36mmkp-service[39m[22m [90m│[39m 0  [90m│[39m [34m[1mcluster[22m[39m [90m│[39m 7462 [90m│[39m [32m[1monline[22m[39m [90m│[39m 46      [90m│[39m 0s     [90m│[39m 50% [90m│[39m 15.9 MB   [90m│[39m [90mdisabled[39m [90m│[39m
+[90m│[39m [1m[36mmkp-service[39m[22m [90m│[39m 1  [90m│[39m [34m[1mcluster[22m[39m [90m│[39m 7464 [90m│[39m [32m[1monline[22m[39m [90m│[39m 45      [90m│[39m 0s     [90m│[39m 28% [90m│[39m 12.3 MB   [90m│[39m [90mdisabled[39m [90m│[39m
+[90m└─────────────[39m[90m┴────[39m[90m┴─────────[39m[90m┴──────[39m[90m┴────────[39m[90m┴─────────[39m[90m┴────────[39m[90m┴─────[39m[90m┴───────────[39m[90m┴──────────┘[39m
+[37m[3m Use `pm2 show <id|name>` to get more details about an app[23m[39m
+[ec2-user@ip-172-31-27-103 srv]$ mv service/public/faq_1.html service/public/faq .html
+[ec2-user@ip-172-31-27-103 srv]$ sleep 15
+[ec2-user@ip-172-31-27-103 srv]$ exit
+logout

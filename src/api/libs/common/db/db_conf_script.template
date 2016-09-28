@@ -1,0 +1,18 @@
+var dbType = require('mssql');
+var multiline = require('multiline');
+
+module.exports = {
+    {{#sqlList}}
+    "{{name}}": {
+        "db": "{{db}}",
+        "sql": multiline(function(){/*
+{{{sql}}}
+            */}),
+        "inputParams": [
+           {{#inputParams}}
+            {"name": "{{name}}", "type": {{type}} }{{inputParamsdot}}
+           {{/inputParams}}
+        ]
+    }{{sqlListdot}}
+    {{/sqlList}}
+};
