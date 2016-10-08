@@ -61,13 +61,54 @@ export function padding(...args){
 
 export const colors={
 	white:"white",
-	black:"black"
+	black:"black",
+	blue:"blue",
+	gray:"gray",
+	orange:"orange"
 };
 
 export const fontSizes={
 	ft16:16,
 	ft14:14
 };
+
+export const navigationStyles=StyleSheet.create({
+	navigationBar:{
+		backgroundColor:colors.black
+	},
+	title:{
+		color:colors.white
+	},
+	backButton:{
+		color:colors.white
+	},
+	rightButton:{
+		color:colors.white
+	}
+});
+
+export const viewStyles=StyleSheet.create({
+	main:{
+		...margin(64,0,0,0)
+	}
+})
+
+export const textStyles=StyleSheet.create({
+	link:{
+		color:colors.blue,
+		textDecorationLine:"underline",
+		textAlign:"center",
+		...margin(5,0),
+		...padding(5,0),
+		backgroundColor:colors.gray
+	},
+	button:{
+		color:colors.white,
+		backgroundColor:colors.orange,
+		...padding(10,0),
+		textAlign:"center"
+	}
+});
 
 export const colorStyles=StyleSheet.create({
 	white:{

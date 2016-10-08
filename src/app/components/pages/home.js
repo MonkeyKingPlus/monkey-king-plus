@@ -1,13 +1,18 @@
 import BasePage from "./basePage";
-import {View,Text,Navigator} from "react-native";
+import {View,Text} from "react-native";
+import {viewStyles,textStyles} from "../../themes/default";
 
 export default class Home extends BasePage{
 	render(){
-		return <View style={{justifyContent:"center",flex:1,alignItems:"center"}}>
-			<Text>Home</Text>
-			<Text onPress={event=>{
-				this.props.navigator.push({title:"sub"});
-			}}>go to sub</Text>
+		return <View style={[viewStyles.main]}>
+			<Text style={textStyles.link}
+			      onPress={event=>{
+			      	this.props.navigator.$push("register");
+			      }}>go to Register</Text>
+			<Text style={textStyles.link}
+				  onPress={event=>{
+					  this.props.navigator.$push("demo");
+				  }}>go to Demo</Text>
 		</View>;
 	}
 }
