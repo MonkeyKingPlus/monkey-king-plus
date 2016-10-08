@@ -33,6 +33,7 @@ export default class Bootstrap extends Component {
 									 }
 									 return null;
 								 }}
+
 								 routes={routes}></RouterWithRedux>
 			</Provider>
 		);

@@ -89,7 +89,8 @@ export const navigationStyles=StyleSheet.create({
 
 export const viewStyles=StyleSheet.create({
 	main:{
-		...margin(64,0,0,0)
+		...margin(64,0,0,0),
+		flex:1
 	}
 })
 
