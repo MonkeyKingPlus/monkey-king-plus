@@ -25,13 +25,21 @@ const styles = StyleSheet.create({
 })
 class Notify extends BaseElement {
 
+	constructor(props){
+		super(props);
+		this.timer=null;
+	}
+
 	delayRefresh(props) {
+		if(this.timer){
+			clearTimeout(this.timer);
+		}
 		if (props.errors.length > 0) {
 			let first = props.errors.find(item=>item.$expire > Date.now());
 			if (first) {
 				let timeout = first.$expire - Date.now();
 				console.log(timeout);
-				setTimeout(()=> {
+				this.timer=setTimeout(()=> {
 					this.forceUpdate();
 				}, timeout);
 			}
@@ -45,11 +53,6 @@ class Notify extends BaseElement {
 	componentDidUpdate() {
 		this.delayRefresh(this.props);
 	}
-
-	// componentWillReceiveProps(nextProps){
-	// 	console.log("next props : ",nextProps);
-	// 	this.delayRefresh(nextProps);
-	// }
 
 	render() {
 		return (
@@ -65,6 +68,9 @@ class Notify extends BaseElement {
 	}
 
 	componentWillUnmount() {
+		if(this.timer){
+			clearTimeout(this.timer);
+		}
 		this.props.dispatch(cleanError());
 	}
 }
