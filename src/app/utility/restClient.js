@@ -1,48 +1,51 @@
 import agent from "superagent";
-import * as globalAction from "../actions/global.action";
+import {beginRequest, endRequest} from "../actions/network.action";
+import {businessError} from "../actions/error.action";
 
-class RestClient {
+export default class RestClient {
+	constructor(ops={}){
+		this.ops=Object.assign({
+			beforeRequest(){},
+			afterRequest(){}
+		},ops)
+	}
 	request(conf, dispatch) {
 		let options = Object.assign({}, conf);
 		if (!options.type) {
 			options.type = "get";
 		}
-		else{
-			options.type=options.type.toLowerCase();
+		else {
+			options.type = options.type.toLowerCase();
 		}
 		options.url = `${$config.APIHost}${conf.url}`;
 		if (!options.headers) {
 			options.headers = {};
 		}
-		//options.headers[$config.AppIDName] = $config.AppID;
 		if (options.type === "post") {
 			options.headers["content-type"] = "application/json";
 		}
+		this.ops.beforeRequest(options,dispatch);
 		return new Promise((resolve, reject)=> {
 			let req = agent[options.type](options.url).set(options.headers);
 			if (dispatch) {
-				dispatch(globalAction.beginRequest(options, req));
+				dispatch(beginRequest(options, req));
 			}
 			if (options.data) {
 				req.send(options.data);
 			}
 			req.end((err, response)=> {
+				this.ops.afterRequest(err,response,dispatch);
 				if (dispatch) {
-					dispatch(globalAction.endRequest(options, req));
+					dispatch(endRequest(options, req));
 				}
 				if (err) {
-					dispatch(globalAction.systemError(err));
+					dispatch(businessError(err.message || "系统错误"));
 					//reject(err);
 				}
 				else {
-					// response.json = ()=> {
-					// 	return response.body;
-					// };
 					resolve(response);
 				}
 			});
 		});
 	}
 }
-
-export default new RestClient();

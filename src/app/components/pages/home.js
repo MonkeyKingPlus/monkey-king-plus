@@ -23,6 +23,10 @@ export default class Home extends BasePage {
 				  onPress={event=> {
 					  this.$throwBusinessError(`${df(new Date(), "yyyy-mm-dd HH:MM:ss")}business error`)
 				  }}>business error</Text>
+			<Text style={textStyles.button}
+				  onPress={event=> {
+					  this.$throwBusinessError(`${df(new Date(), "yyyy-mm-dd HH:MM:ss")}business error`)
+				  }}>business error</Text>
 			<Error/>
 		</View>;
 	}
