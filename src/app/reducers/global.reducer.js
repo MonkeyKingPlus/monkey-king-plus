@@ -18,7 +18,7 @@ const initialGlobalState = {
 
 export default function (state = initialGlobalState, action = {}) {
 
-	let newState = Object.assign({}, state);
+	let newState = {...state};
 	newState.type = action.type;
 
 	switch (action.type) {
@@ -52,7 +52,10 @@ export default function (state = initialGlobalState, action = {}) {
 		/* businessError **************************************************************/
 		case globalAction.SYSTEM_ERROR:
 		case globalAction.BUSINESS_ERROR:
-			newState.errors.push(action.err);
+			newState.errors.push({
+				code:action.code,
+				message:action.message
+			});
 			return newState;
 		case globalAction.CLEAN_ERROR:
 			newState.errors = [];

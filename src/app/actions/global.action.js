@@ -35,10 +35,11 @@ export function endRequest(reqConf) {
 }
 
 export function businessError(res){
+	console.log("action : businessError")
 	return {
 		type:BUSINESS_ERROR,
-		code:res.Code,
-		message:res.Message
+		code:res.Code || res.code,
+		message:res.Message || res.message
 	}
 }
 
