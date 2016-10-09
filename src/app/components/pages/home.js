@@ -1,7 +1,7 @@
 import BasePage from "./basePage";
 import {View, Text} from "react-native";
 import {viewStyles, textStyles} from "../../themes/default";
-import Notify from "../elements/notify";
+import Error from "../elements/error";
 import {businessError} from "../../actions/error.action";
 import {connect} from "react-redux";
 import df from "dateformat";
@@ -21,9 +21,9 @@ export default class Home extends BasePage {
 				  }}>go to Demo</Text>
 			<Text style={textStyles.button}
 				  onPress={event=> {
-					  this.props.dispatch(businessError(`${df(new Date(),"yyyy-mm-dd HH:MM:ss")}business error`));
+					  this.$throwBusinessError(`${df(new Date(), "yyyy-mm-dd HH:MM:ss")}business error`)
 				  }}>business error</Text>
-			<Notify/>
+			<Error/>
 		</View>;
 	}
 }

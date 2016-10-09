@@ -18,12 +18,12 @@ const styles = StyleSheet.create({
 	}
 });
 
-@connect(({errors})=> {
+@connect(({error})=> {
 	return {
-		...errors
+		...error
 	}
 })
-class Notify extends BaseElement {
+class Error extends BaseElement {
 
 	constructor(props){
 		super(props);
@@ -38,7 +38,6 @@ class Notify extends BaseElement {
 			let first = props.errors.find(item=>item.$expire > Date.now());
 			if (first) {
 				let timeout = first.$expire - Date.now();
-				console.log(timeout);
 				this.timer=setTimeout(()=> {
 					this.forceUpdate();
 				}, timeout);
@@ -75,4 +74,4 @@ class Notify extends BaseElement {
 	}
 }
 
-export default Notify;
+export default Error;

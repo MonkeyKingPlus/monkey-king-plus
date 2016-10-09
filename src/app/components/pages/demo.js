@@ -3,7 +3,7 @@ import {View,Text} from "react-native";
 import {viewStyles,textStyles} from "../../themes/default";
 import {connect} from "react-redux";
 import {hideMessage,showMessage} from "../../actions/demo.action";
-import Notify from "../elements/notify";
+import Error from "../elements/error";
 import {businessError} from "../../actions/error.action";
 
 @connect(({demo})=>{
@@ -20,9 +20,7 @@ import {businessError} from "../../actions/error.action";
 				dispatch(showMessage());
 			}
 		},
-		throwBusinessError(){
-			dispatch(businessError("error"));
-		}
+		dispatch
 	};
 })
 export default class Demo extends BasePage{
@@ -34,9 +32,9 @@ export default class Demo extends BasePage{
 			      	this.props.toggle(this.props.show);
 			      }}>Toggle Message</Text>
 			<Text style={textStyles.button} onPress={event=>{
-				this.props.throwBusinessError();
+				this.$throwBusinessError("error");
 			}}>business error</Text>
-			<Notify/>
+			<Error/>
 		</View>;
 	}
 }
