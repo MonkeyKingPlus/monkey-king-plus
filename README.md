@@ -16,7 +16,7 @@
     |--routes.js        router配置
 
 # route 配置
-router使用的是［react-native-router］(https://github.com/MonkeyKingPlus/react-native-router.git)
+router使用的是[react-native-router](https://github.com/MonkeyKingPlus/react-native-router.git)
 ```javascript
 const routes=[{
 	path: "home",
