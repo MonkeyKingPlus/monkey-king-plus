@@ -10,7 +10,7 @@ export function cleanError(){
 export function businessError(message, ops = {
 	code: 0,
 	stack: "",
-	delay: 3000
+	delay: 5000
 }) {
 	return {
 		type: BUSINESS_ERROR,

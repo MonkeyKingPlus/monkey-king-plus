@@ -20,13 +20,15 @@ export function beginRequest(reqConf, xhr) {
 	return {
 		type: BEGIN_REQUEST,
 		key: genRequestKey(reqConf),
-		xhr
+		xhr,
+		reqConf
 	};
 }
 
 export function endRequest(reqConf) {
 	return {
 		type: END_REQUEST,
-		key: genRequestKey(reqConf)
+		key: genRequestKey(reqConf),
+		reqConf
 	};
 }

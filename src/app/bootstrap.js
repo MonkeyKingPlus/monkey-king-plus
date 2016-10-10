@@ -7,6 +7,10 @@ import {createStore, applyMiddleware, compose} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import reducers from "./reducers";
 
+// combine app config by environment
+import appConfig from "./config/app.config.json";
+window.$config=Object.assign({},appConfig,{...appConfig[appConfig.env]});
+
 const RouterWithRedux = connect()(Router);
 
 const middleware = [thunkMiddleware];
@@ -16,6 +20,20 @@ export const store = compose(
 )(createStore)(reducers);
 
 import routes from "./routes";
+
+import RestClient from "./utility/restClient";
+const restClient=new RestClient({
+	beforeSend(options,dispatch){
+		options.url=`${$config.host}${options.url}`;
+	}
+	// success(){},
+	// error(err){
+	// },
+	// complete(err,response,dispatch){
+	// }
+});
+window.$req=restClient.request.bind(restClient);
+
 
 export default class Bootstrap extends Component {
 	render() {

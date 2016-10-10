@@ -1,5 +1,9 @@
 {
-	"env":"development"	    //development,production
-	,"development":{}
-	,"production":{}
+	"env":"development",	    //development,production
+	"development":{
+		"host":"http://ec2-54-249-7-123.ap-northeast-1.compute.amazonaws.com:4000/v1"
+	},
+	"production":{
+		"host":"http://ec2-54-249-7-123.ap-northeast-1.compute.amazonaws.com:4000/v1"
+	}
 }
