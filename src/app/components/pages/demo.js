@@ -4,7 +4,7 @@ import {viewStyles,textStyles,margin} from "../../themes/default";
 import {connect} from "react-redux";
 import {hideMessage,showMessage,fetchTest,fetchHomeInfo} from "../../actions/demo.action";
 import Error from "../elements/error";
-import agent from "superagent";
+import NetworkStatus from "../elements/networkStatus";
 
 @connect(({demo})=>{
 	return {
@@ -48,6 +48,7 @@ export default class Demo extends BasePage{
 				}))
 			}}>{this.state.result?this.state.result : "fetch test"}</Text>
 			<Error/>
+			<NetworkStatus/>
 		</View>;
 	}
 }
