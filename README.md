@@ -61,10 +61,6 @@ $throwBusinessError(message,ops={
 	delay:5000
 })
 ```
-** ops.code{int}:默认是0
-** ops.stack{string}:默认是""
-** ops.delay{int}:延迟消失,毫秒数.默认是5000
-
 
 # 规范
 
