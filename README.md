@@ -51,6 +51,16 @@ export default routes;
 所有的页面和组件都会继承至BaseComponent.这里提供了一些快捷操作.所有的方法名都以$开头
 * $cleanError():清空errors
 * $throwBusinessError(message[,ops]):抛出一个业务异常,将由Error组件进行处理.如果页面上没有添加Error组件,business error将被忽略.参数如下:
+```javascript
+//@paramas message {string} : required
+//@params ops {object} : optional
+//@return void
+$throwBusinessError(message,ops={
+	code:0,
+	stack:"",
+	delay:5000
+})
+```
 ** ops.code{int}:默认是0
 ** ops.stack{string}:默认是""
 ** ops.delay{int}:延迟消失,毫秒数.默认是5000
