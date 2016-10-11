@@ -62,6 +62,9 @@ $throwBusinessError(message,ops={
 })
 ```
 
+# RESTful 
+RESTful请参见[node-api](https://github.com/MonkeyKingPlus/node-api)
+
 # 规范
 
 ## actions 规范
