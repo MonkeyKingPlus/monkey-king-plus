@@ -43,6 +43,11 @@ export default routes;
 ## Error 处理错误消息
 ## NetworkStatus 网络请求状态
 
+# 全局变量
+* $config:对应app.config.js,根据env的值把对应的配置合并到$config中.
+* React
+
+
 # 规范
 
 ## actions 规范
