@@ -91,3 +91,7 @@ RESTful请参见[node-api](https://github.com/MonkeyKingPlus/node-api)
 ## page 规范
 * 所有的页面必须继承BasePage
 
+## icon的使用
+* 尽量使用字体文件中的icon
+* 所有的icon都必须转换成字体文件来使用
+
