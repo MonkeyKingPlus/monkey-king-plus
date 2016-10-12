@@ -46,6 +46,9 @@ export default class Bootstrap extends Component {
 			<View style={styles.container}>
 				<Provider store={store}>
 					<RouterWithRedux navigationBarStyle={navigationStyles.navigationBar}
+									 onChange={(type)=>{
+									 	console.log(type);
+									 }}
 									 renderTitle={(route)=> {
 										 return <Text style={[navigationStyles.title]}>{route.title}</Text>;
 									 }}
