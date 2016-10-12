@@ -45,6 +45,7 @@ export default routes;
 
 # 全局变量
 * $config:对应app.config.js,根据env的值把对应的配置合并到$config中.
+* $req:请求api
 * React
 
 # BaseComponent
