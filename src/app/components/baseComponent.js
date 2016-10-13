@@ -17,4 +17,8 @@ export default class BaseComponent extends Component {
 		}
 	}
 
+	$updateState(obj={},cb=()=>{}){
+		this.setState(Object.assign({},obj),cb);
+	}
+
 }
