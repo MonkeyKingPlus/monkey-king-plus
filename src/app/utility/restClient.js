@@ -45,7 +45,7 @@ export default class RestClient {
 				if (err) {
 					this.ops.error(err,dispatch);
 					dispatch(businessError(err.message || "系统错误"));
-					reject(err);
+					//reject(err);
 				}
 				else {
 					this.ops.success(response,dispatch);

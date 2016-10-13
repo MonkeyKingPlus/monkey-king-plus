@@ -1,7 +1,6 @@
 # monkey-king-plus
 
 # app 目录结构说明
---------------
     |--actions          actions
     |--android          android工程
     |--components
