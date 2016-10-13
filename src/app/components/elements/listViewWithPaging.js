@@ -2,7 +2,7 @@ import BaseElement from "./baseElement";
 import {PropTypes} from "react";
 import {ListView} from "react-native";
 
-export default class PagingListView extends BaseElement{
+export default class ListViewWithPaging extends BaseElement{
 
 	constructor(props){
 		super(props);
@@ -11,7 +11,7 @@ export default class PagingListView extends BaseElement{
 			pageSize:props.initialPageSize
 		};
 		this.state={
-			ds:PagingListView.buildDefaultDataSource(props.dataSource)
+			ds:ListViewWithPaging.buildDefaultDataSource(props.dataSource)
 		};
 	}
 
@@ -44,7 +44,7 @@ export default class PagingListView extends BaseElement{
 
 	componentWillReceiveProps(nextProps){
 		this.$updateState({
-			ds:PagingListView.buildDefaultDataSource(nextProps.dataSource)
+			ds:ListViewWithPaging.buildDefaultDataSource(nextProps.dataSource)
 		});
 	}
 
