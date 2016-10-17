@@ -1,7 +1,7 @@
 import BaseComponent from "../baseComponent";
 import BasePage from "./basePage";
 import {View, Text, TouchableHighlight, Image,StyleSheet} from "react-native";
-import {viewStyles, textStyles, margin,navigationStyles,colors} from "../../themes/default";
+import {viewStyles, textStyles, margin,padding,navigationStyles,colors} from "../../themes/default";
 import Error from "../elements/error";
 import {businessError} from "../../actions/error.action";
 import {connect} from "react-redux";
@@ -85,7 +85,7 @@ export default class Home extends BasePage {
 				openDrawerOffset={100}
 				ref="menu"
 				content={<DrawerMenu/>}>
-				<View style={[viewStyles.main]}>
+				<View style={[viewStyles.main,{...padding(16,10,0,10)}]}>
 					<Text style={textStyles.link}
 						  onPress={event=> {
 							  this.props.navigator.$push("register");
