@@ -31,10 +31,6 @@ export default class Demo extends BasePage{
 		};
 	}
 
-	componentDidMount(){
-		console.log("demo did mount");
-	}
-
 	render(){
 		return <View style={[viewStyles.main]}>
 			{this.props.show && <Text>{this.props.message}</Text>}
@@ -52,6 +48,10 @@ export default class Demo extends BasePage{
 					})
 				}))
 			}}>{this.state.result?this.state.result : "fetch test"}</Text>
+			<Text style={textStyles.link}
+				  onPress={event=> {
+					  this.props.navigator.$push("register");
+				  }}>go to Register</Text>
 			<Error/>
 			<NetworkStatus/>
 		</View>;

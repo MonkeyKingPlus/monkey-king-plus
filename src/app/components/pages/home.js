@@ -38,10 +38,10 @@ export default class Home extends BasePage {
 		super(props);
 		//hide:0,show:1
 		this.menuStatus=0;
+
 	}
 
-	componentDidMount() {
-		console.log("home did mount")
+	sceneDidFocus() {
 		this.props.navigator.$refreshNavBar({
 			renderLeftButton: ()=> {
 				return (
@@ -55,6 +55,7 @@ export default class Home extends BasePage {
 				);
 			}
 		})
+
 	}
 
 	openMenu(){
@@ -96,8 +97,15 @@ export default class Home extends BasePage {
 						  }}>go to Demo</Text>
 					<Text style={textStyles.button}
 						  onPress={event=> {
-							  this.$throwBusinessError(`${df(new Date(), "yyyy-mm-dd HH:MM:ss")}business error`)
+							//this.$throwBusinessError(this.route.focus);
+						  	this.$throwBusinessError(`${df(new Date(), "yyyy-mm-dd HH:MM:ss")}business error`)
 						  }}>business error</Text>
+					<Text style={textStyles.button}
+						  onPress={event=> {
+							  this.props.navigator.$refreshNavBar({
+								  hideNavigationBar:true
+							  })
+						  }}>toggle navigation bar</Text>
 					<Error/>
 				</View>
 			</Drawer>
