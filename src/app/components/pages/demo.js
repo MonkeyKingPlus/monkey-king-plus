@@ -30,6 +30,11 @@ export default class Demo extends BasePage{
 			result:null
 		};
 	}
+
+	componentDidMount(){
+		console.log("demo did mount");
+	}
+
 	render(){
 		return <View style={[viewStyles.main]}>
 			{this.props.show && <Text>{this.props.message}</Text>}

@@ -8,14 +8,7 @@ import {TouchableHighlight} from "react-native";
 const routes = [{
 	path: "home",
 	title: "MonkeyKingPlus",
-	component: <Home/>,
-	renderLeftButton: ()=> {
-		return (
-			<TouchableHighlight style={[navigationStyles.base,navigationStyles.leftButton]}>
-				<Image source={require("./themes/assets/menu.png")}/>
-			</TouchableHighlight>
-		);
-	}
+	component: <Home/>
 }, {
 	path: "register",
 	title: "Register-Step1",
