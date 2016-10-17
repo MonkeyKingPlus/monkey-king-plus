@@ -1,5 +1,8 @@
 import React, {Component, PropTypes} from "react";
-import {AppRegistry, Text, Navigator, View, StyleSheet} from "react-native";
+import {
+	AppRegistry, Text, Navigator, View, StyleSheet,
+	Image, TouchableHighlight
+} from "react-native";
 import Router from "react-native-router";
 import {navigationStyles, viewStyles} from "./themes/default";
 import {connect, Provider} from "react-redux";
@@ -46,17 +49,27 @@ export default class Bootstrap extends Component {
 			<View style={styles.container}>
 				<Provider store={store}>
 					<RouterWithRedux navigationBarStyle={navigationStyles.navigationBar}
-									 onChange={(type)=>{
-									 	console.log(type);
+									 onChange={(type)=> {
+										 console.log(type);
 									 }}
 									 renderTitle={(route)=> {
-										 return <Text style={[navigationStyles.title]}>{route.title}</Text>;
+										 return (
+											 <View style={[navigationStyles.base]}>
+												 <Text style={[navigationStyles.title]}>{route.title}</Text>
+											 </View>
+										 );
 									 }}
 									 renderLeftButton={(route, navigator, index)=> {
 										 if (index > 0) {
-											 return <Text style={[navigationStyles.backButton]} onPress={event=> {
-												 navigator.$pop();
-											 }}>back</Text>
+											 return (
+												 <TouchableHighlight
+													 style={[navigationStyles.base, navigationStyles.leftButton]}
+													 onPress={event=> {
+														 navigator.$pop();
+													 }}>
+													 <Image source={require("./themes/assets/back-icon.png")}/>
+												 </TouchableHighlight >
+											 );
 										 }
 										 return null;
 									 }}

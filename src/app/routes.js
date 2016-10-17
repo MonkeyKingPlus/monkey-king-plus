@@ -1,11 +1,21 @@
+import {Image} from "react-native";
 import Home from "./components/pages/home";
 import Register, {RegisterStep2} from "./components/pages/register";
 import Demo from "./components/pages/demo";
+import {navigationStyles} from "./themes/default";
+import {TouchableHighlight} from "react-native";
 
-const routes=[{
+const routes = [{
 	path: "home",
-	title: "Home",
-	component: <Home/>
+	title: "MonkeyKingPlus",
+	component: <Home/>,
+	renderLeftButton: ()=> {
+		return (
+			<TouchableHighlight style={[navigationStyles.base,navigationStyles.leftButton]}>
+				<Image source={require("./themes/assets/menu.png")}/>
+			</TouchableHighlight>
+		);
+	}
 }, {
 	path: "register",
 	title: "Register-Step1",

@@ -69,18 +69,26 @@ export const colors={
 
 export const fontSizes={
 	ft16:16,
-	ft14:14
+	ft14:14,
+	ft20:20
 };
 
 export const navigationStyles=StyleSheet.create({
 	navigationBar:{
 		backgroundColor:colors.black
 	},
-	title:{
-		color:colors.white
+	base:{
+		height:44,
+		justifyContent:"center",
+		alignItems:"center"
 	},
-	backButton:{
-		color:colors.white
+
+	title:{
+		color:colors.white,
+		fontSize:fontSizes.ft20
+	},
+	leftButton:{
+		width:40
 	},
 	rightButton:{
 		color:colors.white
