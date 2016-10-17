@@ -1,3 +1,7 @@
 rootProject.name = 'app'
 
 include ':app'
+include ':react-native-fs'
+project(':react-native-fs').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fs/android')
+include ':react-native-social-kit'
+project(':react-native-social-kit').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-social-kit/android')
