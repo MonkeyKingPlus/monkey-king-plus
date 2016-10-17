@@ -11,11 +11,8 @@
     "react": "15.3.2",
     "react-native": "0.33.0",
     "react-native-animatable": "^0.6.1",
-<<<<<<< b598ff10b9709ddeb449fc9aeb8efb827eacdc91
     "react-native-drawer": "^2.3.0",
-=======
     "react-native-image-view": "git+https://github.com/MonkeyKingPlus/react-native-image-view.git",
->>>>>>> import MKPLoadImageView and react-native-social-kit
     "react-native-router": "git+https://github.com/MonkeyKingPlus/react-native-router.git",
     "react-native-social-kit": "0.0.9",
     "react-redux": "^4.4.5",
