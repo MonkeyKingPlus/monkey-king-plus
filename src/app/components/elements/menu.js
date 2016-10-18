@@ -2,7 +2,8 @@ import BaseElement from "./baseElement";
 import {viewStyles, textStyles, margin, padding, navigationStyles, colors} from "../../themes/default";
 import {
 	StyleSheet, View, Text,
-	DeviceEventEmitter
+	DeviceEventEmitter,
+	Image
 } from "react-native";
 import {toggleMenu} from "../../actions/menu.action";
 import {connect} from "react-redux";
@@ -15,10 +16,14 @@ const styles = StyleSheet.create({
 	menu: {
 		backgroundColor: colors.white,
 		flex: 1,
+	},
+	menuTop: {
+		height: 172,
+		backgroundColor: colors.black
 	}
 });
 
-const mainOverlayStyle={
+const mainOverlayStyle = {
 	backgroundColor: colors.black,
 	opacity: 0.5
 };
@@ -28,13 +33,9 @@ class Menu extends BaseElement {
 	render() {
 		return (
 			<View style={[styles.menu]}>
-				<Text style={textStyles.button}>Drawer</Text>
-				<Text>Drawer</Text>
-				<Text>Drawer</Text>
-				<Text>Drawer</Text>
-				<Text>Drawer</Text>
-				<Text>Drawer</Text>
-				<Text>Drawer</Text>
+				<View style={styles.menuTop}>
+					<Image/>
+				</View>
 			</View>
 		);
 	}
@@ -81,9 +82,8 @@ export default class DrawerWithMenu extends BaseElement {
 				onClose={ratio=> {
 					this.setState({showMask: false});
 				}}
+				tapToClose={true}
 				type="overlay"
-				panOpenMask={100}
-				panCloseMask={100}
 				openDrawerOffset={100}
 				content={<Menu/>}>
 				{this.props.children}

@@ -70,7 +70,7 @@ export default class Bootstrap extends Component {
 											onPress={event=> {
 												navigator.$pop();
 											}}>
-											<Image source={require("./themes/assets/back-icon.png")}/>
+											<Image source={require("./themes/assets/icons/back-icon.png")}/>
 										</TouchableHighlight >
 									);
 								}

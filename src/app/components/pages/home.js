@@ -18,7 +18,7 @@ export default class Home extends BasePage {
 							this.$toggleMenu(true);
 						}}
 						style={[navigationStyles.base, navigationStyles.leftButton]}>
-						<Image source={require("../../themes/assets/menu.png")}/>
+						<Image source={require("../../themes/assets/icons/menu.png")}/>
 					</TouchableHighlight>
 				);
 			}
