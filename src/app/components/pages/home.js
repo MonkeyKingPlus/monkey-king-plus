@@ -1,12 +1,11 @@
-import BaseComponent from "../baseComponent";
 import BasePage from "./basePage";
-import {View, Text, TouchableHighlight, Image, StyleSheet} from "react-native";
+import {View, Text, TouchableHighlight, Image, StyleSheet,DeviceEventEmitter} from "react-native";
 import {viewStyles, textStyles, margin, padding, navigationStyles, colors} from "../../themes/default";
 import Error from "../elements/error";
 import {businessError} from "../../actions/error.action";
 import {connect} from "react-redux";
 import df from "dateformat";
-import {toggleMenu} from "../../actions/menu.action";
+import {TOGGLE_MENU} from "../elements/drawerWithRedux";
 
 @connect()
 export default class Home extends BasePage {
@@ -17,7 +16,7 @@ export default class Home extends BasePage {
 				return (
 					<TouchableHighlight
 						onPress={event=> {
-							this.props.dispatch(toggleMenu("open"));
+							this.$toggleMenu(true);
 						}}
 						style={[navigationStyles.base, navigationStyles.leftButton]}>
 						<Image source={require("../../themes/assets/menu.png")}/>
