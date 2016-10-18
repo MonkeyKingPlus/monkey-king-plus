@@ -70,6 +70,7 @@ export const colors={
 export const fontSizes={
 	ft16:16,
 	ft14:14,
+	ft15:15,
 	ft20:20
 };
 
