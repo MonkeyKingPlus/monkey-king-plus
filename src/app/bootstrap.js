@@ -9,7 +9,7 @@ import {connect, Provider} from "react-redux";
 import {createStore, applyMiddleware, compose} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import reducers from "./reducers";
-import DrawerWithRedux from "./components/elements/drawerWithRedux";
+import Menu from "./components/elements/menu";
 
 // combine app config by environment
 import appConfig from "./config/app.config.json";
@@ -49,7 +49,7 @@ export default class Bootstrap extends Component {
 		return (
 			<View style={styles.container}>
 				<Provider store={store}>
-					<DrawerWithRedux>
+					<Menu>
 						<RouterWithRedux
 							navigationBarStyle={navigationStyles.navigationBar}
 							onChange={(type)=> {
@@ -77,7 +77,7 @@ export default class Bootstrap extends Component {
 								return null;
 							}}
 							routes={routes}></RouterWithRedux>
-					</DrawerWithRedux>
+					</Menu>
 				</Provider>
 			</View>
 		);

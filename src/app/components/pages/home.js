@@ -5,7 +5,6 @@ import Error from "../elements/error";
 import {businessError} from "../../actions/error.action";
 import {connect} from "react-redux";
 import df from "dateformat";
-import {TOGGLE_MENU} from "../elements/drawerWithRedux";
 
 @connect()
 export default class Home extends BasePage {

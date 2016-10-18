@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {DeviceEventEmitter} from "react-native";
-import {TOGGLE_MENU} from "./elements/drawerWithRedux";
+import {TOGGLE_MENU} from "./elements/menu";
 import {cleanError,businessError} from "../actions/error.action";
 
 window.React = React;
