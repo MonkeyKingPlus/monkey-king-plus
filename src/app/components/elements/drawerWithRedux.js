@@ -9,6 +9,7 @@ export default class DrawerWithRedux extends BaseElement {
 		return (
 			<Drawer
 				type="overlay"
+				tapToClose={true}
 				openDrawerOffset={100}
 				open={this.props.open}
 				content={<Menu/>}>

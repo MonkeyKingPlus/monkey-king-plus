@@ -10,7 +10,7 @@ export default function (state = initialState, action = {}) {
 	switch (action.type) {
 		case TOGGLE_MENU:
 			if (helper.hasValue(action.value)) {
-				newState.open = action.value.toLower() === "open";
+				newState.open = action.value.toLowerCase() === "open";
 			}
 			else {
 				newState.open = !newState.open;

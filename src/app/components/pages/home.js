@@ -17,7 +17,7 @@ export default class Home extends BasePage {
 				return (
 					<TouchableHighlight
 						onPress={event=> {
-							this.props.dispatch(toggleMenu());
+							this.props.dispatch(toggleMenu("open"));
 						}}
 						style={[navigationStyles.base, navigationStyles.leftButton]}>
 						<Image source={require("../../themes/assets/menu.png")}/>
