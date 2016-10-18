@@ -9,6 +9,7 @@ import {connect, Provider} from "react-redux";
 import {createStore, applyMiddleware, compose} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import reducers from "./reducers";
+import DrawerWithRedux from "./components/elements/drawerWithRedux";
 
 // combine app config by environment
 import appConfig from "./config/app.config.json";
@@ -48,32 +49,35 @@ export default class Bootstrap extends Component {
 		return (
 			<View style={styles.container}>
 				<Provider store={store}>
-					<RouterWithRedux navigationBarStyle={navigationStyles.navigationBar}
-									 onChange={(type)=> {
-										 console.log(type);
-									 }}
-									 renderTitle={(route)=> {
-										 return (
-											 <View style={[navigationStyles.base]}>
-												 <Text style={[navigationStyles.title]}>{route.title}</Text>
-											 </View>
-										 );
-									 }}
-									 renderLeftButton={(route, navigator, index)=> {
-										 if (index > 0) {
-											 return (
-												 <TouchableHighlight
-													 style={[navigationStyles.base, navigationStyles.leftButton]}
-													 onPress={event=> {
-														 navigator.$pop();
-													 }}>
-													 <Image source={require("./themes/assets/back-icon.png")}/>
-												 </TouchableHighlight >
-											 );
-										 }
-										 return null;
-									 }}
-									 routes={routes}></RouterWithRedux>
+					<DrawerWithRedux>
+						<RouterWithRedux
+							navigationBarStyle={navigationStyles.navigationBar}
+							onChange={(type)=> {
+								console.log(type);
+							}}
+							renderTitle={(route)=> {
+								return (
+									<View style={[navigationStyles.base]}>
+										<Text style={[navigationStyles.title]}>{route.title}</Text>
+									</View>
+								);
+							}}
+							renderLeftButton={(route, navigator, index)=> {
+								if (index > 0) {
+									return (
+										<TouchableHighlight
+											style={[navigationStyles.base, navigationStyles.leftButton]}
+											onPress={event=> {
+												navigator.$pop();
+											}}>
+											<Image source={require("./themes/assets/back-icon.png")}/>
+										</TouchableHighlight >
+									);
+								}
+								return null;
+							}}
+							routes={routes}></RouterWithRedux>
+					</DrawerWithRedux>
 				</Provider>
 			</View>
 		);
