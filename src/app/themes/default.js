@@ -76,7 +76,14 @@ export const fontSizes={
 
 export const navigationStyles=StyleSheet.create({
 	navigationBar:{
-		backgroundColor:colors.black
+		backgroundColor:colors.black,
+		shadowColor: "#000000",
+		shadowOpacity: 0.2,
+		shadowRadius: 1,
+		shadowOffset: {
+			height: 2,
+			width: 0
+		}
 	},
 	base:{
 		height:44,
