@@ -27,15 +27,15 @@ const styles = StyleSheet.create({
 		...padding(0, 0, 0, 16)
 	},
 	avatar: {
-		width: 40,
-		height: 40,
-		borderRadius: 20,
+		width: 60,
+		height: 60,
+		borderRadius: 30,
 		...margin(60, 0, 0, 0)
 	},
 	name: {
 		color: colors.white,
 		fontSize: fontSizes.ft15,
-		...margin(33, 0, 0, 0)
+		...margin(20, 0, 0, 0)
 	},
 	menuList: {
 		...padding(0, 0, 0, 24)
