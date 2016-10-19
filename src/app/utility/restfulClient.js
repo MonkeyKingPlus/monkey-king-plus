@@ -19,7 +19,7 @@ function genRequestKey(requestConf) {
 /**
  * The action is calling when request is sent before.
  * @param {object} reqConf - request options
- * @param {object} xhr - XMLHttpRequest
+ * @param {XMLHttpRequest} xhr
  * @returns {object}
  * */
 export function beginRequest(reqConf, xhr) {
@@ -100,6 +100,7 @@ export default class RESTfulClient {
 	 * @constructor
 	 * @param {object} ops
 	 * @param {function} [ops.beforeSend=noop]
+	 * @param {function} [ops.sending=noop]
 	 * @param {function} [ops.success=noop]
 	 * @param {function} [ops.error=noop]
 	 * @param {function} [ops.complete=noop]
@@ -111,7 +112,36 @@ export default class RESTfulClient {
 			 * @param {object} options - options is ref request options
 			 * @param {function} dispatch
 			 * */
-			beforeSend(options,dispatch){},
+			beforeSend(options,dispatch){
+				if(dispatch){
+					dispatch(beginRequest(options, req));
+				}
+			},
+			/**
+			 * It is fired when request is sending.
+			 * the beginRequest action is invoked by default and the parameter dispatch is provided.
+			 * @param {object} options - request options
+			 * @param {XMLHttpRequest} xhr
+			 * @param {function} dispatch
+			 * */
+			sending(options,xhr,dispatch){
+				if(dispatch){
+					dispatch(beginRequest(options,xhr));
+				}
+			},
+			/**
+			 * It is fired when response is received right now.
+			 * the endRequest action is invoked by default and the parameter dispatch is provided.
+			 * @param {object} options - request options
+			 * @param {object} response
+			 * @param {XMLHttpRequest} xhr
+			 * @param {function} dispatch
+			 * */
+			received(options,response,xhr,dispatch){
+				if(dispatch){
+					dispatch(endRequest(options));
+				}
+			},
 			/**
 			 * It is fired when the request have any error.
 			 * @param {object} response
@@ -141,6 +171,7 @@ export default class RESTfulClient {
 	 * @param {boolean} [conf.canAbort=false] - marking the request can be terminated.
 	 * @param {object} [headers={}] - http headers, default content-type's value will be set to "application/json;utf-8" when conf.type is post
 	 * @param {object} conf.data - request data
+	 * @param {function} dispatch - optional , if you provide the parameter dispatch , you can know the network status from network status reducer.
 	 * */
 	request(conf, dispatch) {
 		let options = Object.assign({
@@ -162,16 +193,12 @@ export default class RESTfulClient {
 		this.ops.beforeSend(options,dispatch);
 		return new Promise((resolve, reject)=> {
 			let req = agent[options.type](options.url).set(options.headers);
-			if (dispatch) {
-				dispatch(beginRequest(options, req));
-			}
+			this.ops.sending(options,req,dispatch);
 			if (options.data) {
 				req.send(options.data);
 			}
 			req.end((err, response)=> {
-				if (dispatch) {
-					dispatch(endRequest(options, req));
-				}
+				this.ops.received(options,response,req,dispatch);
 				if (err) {
 					this.ops.error(err,dispatch);
 					//reject(err);

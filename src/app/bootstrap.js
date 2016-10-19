@@ -25,7 +25,7 @@ export const store = compose(
 
 import routes from "./routes";
 import {businessError} from "./actions/error.action";
-import RestClient from "./utility/restClient";
+import RestClient from "./utility/restfulClient";
 const restClient = new RestClient({
 	beforeSend(options, dispatch){
 		options.url = `${$config.host}${options.url}`;
