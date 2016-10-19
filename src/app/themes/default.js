@@ -59,6 +59,31 @@ export function padding(...args){
 	return result;
 }
 
+/**
+ * shadow helper
+ * @param {string} [color='white'] - the color must be a valid web color. such as #fff,white,rgba(0,0,0,0)
+ * @param {number} [opacity=0.2] - range is 0 to 1
+ * @param {number} [radius=1]
+ * @param {object} offset
+ * @param {number} [offset.width=0]
+ * @param {number} [offset.height=0]
+ * @returns {object}
+ * */
+export function shadow(color="#000000",opacity=0.2,radius=1,offset={
+	width:0,
+	height:2
+}){
+	let value={
+		shadowColor:color,
+		shadowOpacity:opacity,
+		shadowRadius:radius,
+		shadowOffset:{
+			...offset
+		}
+	};
+	return value;
+}
+
 export const colors={
 	white:"white",
 	black:"black",
@@ -77,13 +102,7 @@ export const fontSizes={
 export const navigationStyles=StyleSheet.create({
 	navigationBar:{
 		backgroundColor:colors.black,
-		shadowColor: "#000000",
-		shadowOpacity: 0.2,
-		shadowRadius: 1,
-		shadowOffset: {
-			height: 2,
-			width: 0
-		}
+		...shadow()
 	},
 	base:{
 		height:44,

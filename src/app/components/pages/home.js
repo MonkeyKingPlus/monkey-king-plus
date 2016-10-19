@@ -4,7 +4,8 @@ import {View, Text, TouchableHighlight, Image, StyleSheet, DeviceEventEmitter} f
 import {
 	viewStyles, textStyles, margin, padding, navigationStyles,
 	fontSizes,
-	colors
+	colors,
+	shadow
 } from "../../themes/default";
 import Error from "../elements/error";
 import {businessError} from "../../actions/error.action";
@@ -17,25 +18,19 @@ const styles = StyleSheet.create({
 		backgroundColor: "#f6f6f6"
 	},
 	itemView: {
-		...margin(0,0,10,0),
+		...margin(0, 0, 10, 0),
 		backgroundColor: "#fafafa",
 
 		borderWidth: 1,
 		borderRadius: 2,
 		borderColor: "rgba(0,0,0,0.12)",
 
-		shadowColor: "#000000",
-		shadowOpacity: 0.2,
-		shadowRadius: 1,
-		shadowOffset: {
-			height: 2,
-			width: 0
-		}
+		...shadow()
 	},
 	itemTitleView: {
 		flexDirection: "row",
-		...margin(0,16),
-		...padding(16,0),
+		...margin(0, 16),
+		...padding(16, 0),
 		borderBottomWidth: 1,
 		borderBottomColor: "rgba(0,0,0,0.12)"
 	},
@@ -52,7 +47,7 @@ const styles = StyleSheet.create({
 		lineHeight: 16
 	},
 	itemContentView: {
-		...padding(10,16)
+		...padding(10, 16)
 
 	},
 	itemContentText: {
@@ -68,7 +63,7 @@ const styles = StyleSheet.create({
 	itemRichTitleSubView: {
 		position: "absolute",
 		bottom: 0,
-		...padding(10,16),
+		...padding(10, 16),
 		flexDirection: "row",
 		backgroundColor: "rgba(2,1,1,0.4)"
 	},
