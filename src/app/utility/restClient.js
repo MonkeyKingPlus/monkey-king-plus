@@ -95,7 +95,7 @@ export function networkStatus(state=initialState,action={}){
  * RESTful client
  * @class
  * */
-export default class RestClient {
+export default class RESTfulClient {
 	/**
 	 * @constructor
 	 * @param {object} ops
