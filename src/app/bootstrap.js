@@ -24,15 +24,16 @@ export const store = compose(
 )(createStore)(reducers);
 
 import routes from "./routes";
-
+import {businessError} from "./actions/error.action";
 import RestClient from "./utility/restClient";
 const restClient = new RestClient({
 	beforeSend(options, dispatch){
 		options.url = `${$config.host}${options.url}`;
-	}
+	},
 	// success(){},
-	// error(err){
-	// },
+	error(err,dispatch){
+		dispatch(businessError(err.message || "系统错误"));
+	},
 	// complete(err,response,dispatch){
 	// }
 });

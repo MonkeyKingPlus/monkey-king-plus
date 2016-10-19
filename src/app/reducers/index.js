@@ -1,9 +1,12 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 import demo from "./demo.reducer";
 import error from "./error.reducer";
-import network from "./network.reducer";
 import menu from "./menu.reducer";
+import {networkStatus} from "../utility/restClient";
 
 export default combineReducers({
-	demo,error,network,menu
+	demo
+	, error
+	, network: networkStatus
+	, menu
 })
