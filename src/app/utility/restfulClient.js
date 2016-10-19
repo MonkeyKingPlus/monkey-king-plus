@@ -17,7 +17,7 @@ function genRequestKey(requestConf) {
 	return md5(arr.join(""));
 }
 /**
- * The action is calling when request is sent before.
+ * The action is calling when request is sending.
  * @param {object} reqConf - request options
  * @param {XMLHttpRequest} xhr
  * @returns {object}
