@@ -1,8 +1,19 @@
 import BasePage from "./basePage";
 import BaseElement from "../elements/baseElement";
-import {View, Text, TouchableHighlight, Image, StyleSheet, DeviceEventEmitter} from "react-native";
 import {
-	viewStyles, textStyles, margin, padding, navigationStyles,
+	View,
+	Text,
+	TouchableHighlight,
+	TouchableWithoutFeedback,
+	Image,
+	StyleSheet,
+} from "react-native";
+import {
+	viewStyles,
+	textStyles,
+	margin,
+	padding,
+	navigationStyles,
 	fontSizes,
 	colors,
 	shadow
@@ -141,14 +152,22 @@ export default class Home extends BasePage {
 		return (
 			<View style={[viewStyles.main, styles.homeView]}>
 
-				<View style={styles.itemView}>
-					<ItemRichTitle/>
-					<ItemContent/>
-				</View>
-				<View style={styles.itemView}>
-					<ItemTitle/>
-					<ItemContent/>
-				</View>
+				<TouchableWithoutFeedback onPress={event=> {
+					this.props.navigator.$push("home/articleDetail");
+				}}>
+					<View
+						style={styles.itemView}>
+						<ItemRichTitle/>
+						<ItemContent/>
+					</View>
+				</TouchableWithoutFeedback>
+				<TouchableWithoutFeedback>
+					<View
+						style={styles.itemView}>
+						<ItemTitle/>
+						<ItemContent/>
+					</View>
+				</TouchableWithoutFeedback>
 				<Error/>
 			</View>
 		);

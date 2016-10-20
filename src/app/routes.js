@@ -1,14 +1,16 @@
-import {Image} from "react-native";
 import Home from "./components/pages/home";
 import Register, {RegisterStep2} from "./components/pages/register";
 import Demo from "./components/pages/demo";
-import {navigationStyles} from "./themes/default";
-import {TouchableHighlight} from "react-native";
+import ArticleDetail from "./components/pages/articleDetail";
 
 const routes = [{
 	path: "home",
 	title: "MonkeyKingPlus",
-	component:Home
+	component:Home,
+	routes:[{
+		path:"articleDetail",
+		component:ArticleDetail
+	}]
 }, {
 	path: "register",
 	title: "Register-Step1",

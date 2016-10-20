@@ -12,6 +12,7 @@
     "react-native": "0.33.0",
     "react-native-animatable": "^0.6.1",
     "react-native-drawer": "^2.3.0",
+    "react-native-htmlview": "^0.5.0",
     "react-native-image-view": "git+https://github.com/MonkeyKingPlus/react-native-image-view.git",
     "react-native-router": "git+https://github.com/MonkeyKingPlus/react-native-router.git",
     "react-native-social-kit": "git+https://github.com/kunkunbobo/react-native-social-kit.git",
