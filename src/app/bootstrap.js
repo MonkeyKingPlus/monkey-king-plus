@@ -13,7 +13,7 @@ import Menu from "./components/elements/menu";
 import appConfig from "./config/app.config.json";
 import routes from "./routes";
 import {businessError} from "./actions/error.action";
-import RestClient from "./utility/restfulClient";
+import RESTfulClient from "restful-client";
 import {beginRequest,endRequest} from "./actions/network.action";
 
 // combine app config by environment
@@ -28,7 +28,7 @@ export const store = compose(
 )(createStore)(reducers);
 
 
-const restClient = new RestClient({
+const restClient = new RESTfulClient({
 	beforeSend(options, dispatch){
 		options.url = `${$config.host}${options.url}`;
 	},

@@ -16,7 +16,7 @@ const initialState={
  * @param {string} action.type
  * @returns {object}
  * */
-export function networkStatus(state=initialState,action={}){
+export default function networkStatus(state=initialState,action={}){
 	let newState={...state};
 	switch(action.type){
 		case BEGIN_REQUEST:
