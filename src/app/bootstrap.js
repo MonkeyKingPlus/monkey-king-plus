@@ -10,9 +10,13 @@ import {createStore, applyMiddleware, compose} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import reducers from "./reducers";
 import Menu from "./components/elements/menu";
+import appConfig from "./config/app.config.json";
+import routes from "./routes";
+import {businessError} from "./actions/error.action";
+import RestClient from "./utility/restfulClient";
+import {beginRequest,endRequest} from "./actions/network.action";
 
 // combine app config by environment
-import appConfig from "./config/app.config.json";
 window.$config = Object.assign({}, appConfig, {...appConfig[appConfig.env]});
 
 const RouterWithRedux = connect()(Router);
@@ -23,12 +27,20 @@ export const store = compose(
 	applyMiddleware(...middleware)
 )(createStore)(reducers);
 
-import routes from "./routes";
-import {businessError} from "./actions/error.action";
-import RestClient from "./utility/restfulClient";
+
 const restClient = new RestClient({
 	beforeSend(options, dispatch){
 		options.url = `${$config.host}${options.url}`;
+	},
+	sending(options,xhr,dispatch){
+		if(dispatch){
+			dispatch(beginRequest(options,xhr));
+		}
+	},
+	received(options,response,xhr,dispatch){
+		if(dispatch){
+			dispatch(endRequest(options));
+		}
 	},
 	// success(){},
 	error(err,dispatch){
