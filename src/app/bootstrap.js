@@ -3,7 +3,7 @@ import {
 	AppRegistry, Text, Navigator, View, StyleSheet,
 	Image, TouchableHighlight
 } from "react-native";
-import Router from "react-native-router";
+import Router from "mkp-react-native-router";
 import {navigationStyles, viewStyles} from "./themes/default";
 import {connect, Provider} from "react-redux";
 import {createStore, applyMiddleware, compose} from 'redux';
@@ -13,7 +13,7 @@ import Menu from "./components/elements/menu";
 import appConfig from "./config/app.config.json";
 import routes from "./routes";
 import {businessError} from "./actions/error.action";
-import RESTfulClient from "restful-client";
+import RESTfulClient from "mkp-restful-client";
 import {beginRequest,endRequest} from "./actions/network.action";
 
 // combine app config by environment
