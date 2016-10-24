@@ -63,19 +63,19 @@ export default class Bootstrap extends Component {
 			<View style={styles.container}>
 				<Provider store={store}>
 					<Menu>
-						<RouterWithRedux
-							navigationBarStyle={navigationStyles.navigationBar}
-							onChange={(type)=> {
+					<RouterWithRedux
+						navigationBarStyle={navigationStyles.navigationBar}
+						onChange={(type)=> {
 								//console.log(type);
 							}}
-							renderTitle={(route)=> {
+						renderTitle={(route)=> {
 								return (
 									<View style={[navigationStyles.base]}>
 										<Text style={[navigationStyles.title]}>{route.title}</Text>
 									</View>
 								);
 							}}
-							renderLeftButton={(route, navigator, index)=> {
+						renderLeftButton={(route, navigator, index)=> {
 								if (index > 0) {
 									return (
 										<TouchableHighlight
@@ -89,8 +89,8 @@ export default class Bootstrap extends Component {
 								}
 								return null;
 							}}
-							routes={routes}></RouterWithRedux>
-					</Menu>
+						routes={routes}></RouterWithRedux>
+				</Menu>
 				</Provider>
 			</View>
 		);

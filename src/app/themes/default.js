@@ -162,6 +162,6 @@ export const bgColorStyles = StyleSheet.create({
 		backgroundColor: colors.white
 	},
 	black: {
-		backgroundColor: colors.black
+		backgroundColor:'rgba(0, 0, 0, 0.95)'
 	}
 });
