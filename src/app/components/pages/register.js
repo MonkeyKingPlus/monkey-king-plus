@@ -41,24 +41,19 @@ export default class RegisterStep1 extends BasePage{
 			      }}>next step</Text>
 
 		<MKPLoadImageView
-		imageSource={require('../../assets/wechat.png')}
+		imageSource={require('../../themes/assets/icons/wechat_s.png')}
 		style={{margin:10,width:44,height:44}}
 		onPress={this.clickWechat.bind(this)}>
 	  </MKPLoadImageView>
 		<MKPLoadImageView
-		imageSource={require('../../assets/qq.png')}
+		imageSource={require('../../themes/assets/icons/qq_s.png')}
 		style={{margin:10,width:44,height:44}}
 		onPress={this.clickQQ.bind(this)}>
 	</MKPLoadImageView>
 		<MKPLoadImageView
-		imageSource={require('../../assets/sina.png')}
+		imageSource={require('../../themes/assets/icons/sina_weibo_s.png')}
 		style={{margin:10,width:44,height:44}}
 		onPress={this.clickSina.bind(this)}>
-	</MKPLoadImageView>
-		<MKPLoadImageView
-		imageSource={require('../../assets/alipy.png')}
-		style={{margin:10,width:44,height:44}}
-		onPress={this.clickAlipy.bind(this)}>
 	</MKPLoadImageView>
 
 		</View>

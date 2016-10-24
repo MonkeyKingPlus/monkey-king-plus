@@ -1,9 +1,20 @@
 package com.app;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import com.facebook.react.ReactActivity;
-import com.rnfs.RNFSPackage;
 
 public class MainActivity extends ReactActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Intent splash=new Intent(this,SplashScreen.class);
+        splash.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+        this.startActivity(splash);
+    }
 
     /**
      * Returns the name of the main component registered from JavaScript.

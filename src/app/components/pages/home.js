@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
 	itemContentText: {
 		// letterSpacing: 1.3,
 		fontSize: fontSizes.ft14,
-		lineHeight: 19.8
+		lineHeight: 20
 	},
 	itemRichTitleView: {
 		height: 176,

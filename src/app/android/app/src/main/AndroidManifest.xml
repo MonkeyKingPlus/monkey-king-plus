@@ -26,6 +26,8 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+      <activity android:name=".SplashScreen" android:theme="@style/DisabledActivityAnimation"></activity>
+
     </application>
 
 </manifest>
