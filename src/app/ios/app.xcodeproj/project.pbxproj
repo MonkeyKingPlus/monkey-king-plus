@@ -121,6 +121,20 @@
 			remoteGlobalIDString = F12AFB9B1ADAF8F800E0535D;
 			remoteInfo = RNFS;
 		};
+		63D019451DBE5D5C003C6905 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0E31211F83874F2EBB641224 /* Demo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 13B07F961A680F5B00A75B9A;
+			remoteInfo = Demo;
+		};
+		63D019471DBE5D5C003C6905 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0E31211F83874F2EBB641224 /* Demo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 00E356EE1AD99517003FC87E;
+			remoteInfo = DemoTests;
+		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
@@ -146,6 +160,7 @@
 		00E356EE1AD99517003FC87E /* appTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = appTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* appTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = appTests.m; sourceTree = "<group>"; };
+		0E31211F83874F2EBB641224 /* Demo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = Demo.xcodeproj; path = "../node_modules/react-native-social-kit/ShareSDKDemo/ios/Demo.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = app.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -477,6 +492,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		63D019411DBE5D5C003C6905 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				63D019461DBE5D5C003C6905 /* Demo.app */,
+				63D019481DBE5D5C003C6905 /* DemoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -500,6 +524,7 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
+				0E31211F83874F2EBB641224 /* Demo.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -604,6 +629,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 63D019411DBE5D5C003C6905 /* Products */;
+					ProjectRef = 0E31211F83874F2EBB641224 /* Demo.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -719,6 +748,20 @@
 			fileType = archive.ar;
 			path = libRNFS.a;
 			remoteRef = 63ADD49A1DB47580000139EA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		63D019461DBE5D5C003C6905 /* Demo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Demo.app;
+			remoteRef = 63D019451DBE5D5C003C6905 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		63D019481DBE5D5C003C6905 /* DemoTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = DemoTests.xctest;
+			remoteRef = 63D019471DBE5D5C003C6905 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
@@ -873,6 +916,7 @@
 					"\"$(SRCROOT)/../node_modules/react-native-social-kit/ios/weixin/WeixinSDK\"",
 					"\"$(SRCROOT)/../node_modules/react-native/Libraries/Image\"",
 					"$(SRCROOT)/../node_modules/react-native-social-kit/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-social-kit/ios/**",
 				);
 				INFOPLIST_FILE = app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -918,6 +962,7 @@
 					"\"$(SRCROOT)/../node_modules/react-native-social-kit/ios/weibo/WeiboSDK\"",
 					"\"$(SRCROOT)/../node_modules/react-native-social-kit/ios/weixin/WeixinSDK\"",
 					"\"$(SRCROOT)/../node_modules/react-native/Libraries/Image\"",
+					"$(SRCROOT)/../node_modules/react-native-social-kit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-social-kit/ios/**",
 				);
 				INFOPLIST_FILE = app/Info.plist;
@@ -979,6 +1024,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-social-kit/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-social-kit/ios/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1019,6 +1065,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-social-kit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-social-kit/ios/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

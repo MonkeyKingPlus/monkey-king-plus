@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.app"
+    package="com.monkeykingplus"
     android:versionCode="1"
     android:versionName="1.0">
 
@@ -43,5 +43,24 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="NOT_SURE" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            />
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data android:scheme="tencent1105704189"/>
+            </intent-filter>
+        </activity>
+
     </application>
 </manifest>

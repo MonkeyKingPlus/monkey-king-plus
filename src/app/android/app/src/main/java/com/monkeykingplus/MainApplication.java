@@ -1,4 +1,4 @@
-package com.app;
+package com.monkeykingplus;
 
 import android.app.Application;
 

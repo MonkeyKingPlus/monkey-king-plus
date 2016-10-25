@@ -3,35 +3,79 @@
  */
 
 import BasePage from "./basePage";
-import {View,Text,TouchableOpacity,Image} from "react-native";
+import {View,Text,TouchableOpacity,Image,Alert,Platform} from "react-native";
 import {viewStyles,textStyles,bgColorStyles} from "../../themes/default";
 
-import {Weibo, Weixin, QQ, Ali} from 'react-native-social-kit';
+import {Weibo, Weixin, QQ} from 'react-native-social-kit';
 import MKPLoadImageView from "react-native-image-view";
+import {getWeiboUserInfo} from  "../../actions/login.action"
+import {connect} from "react-redux";
 
+const wechatAppID = 'wx458c8642c3333940';
+const weiboAppKey = '728211063';
+const iosQQAppID = '1105759388';
+const androidQQAppID = '1105764592';
+
+@connect(()=> {
+    return {
+
+    };
+})
 
 export default class Login extends BasePage{
+
+
+
 
     constructor(props){
         super(props);
 
-        Weibo.authorize({
-            appId: '3928876547',
-            redirectUrl: 'https://api.weibo.com/oauth2/default.html'
-        }, (data) => {
+        this.QQRegInfo = {};
+        this.WeChatRegInfo={};
+        this.WeiBoRegInfo = {};
 
+        let qqID = iosQQAppID;
+
+        if(Platform.OS === 'android'){
+            qqID = androidQQAppID;
+        }
+        // QQ.registerApp(qqID,(info)=>{
+        //     this.QQRegInfo = Object.assign({}, info);
+        //     console.log("QQ ：",info)
+        // })
+
+        Weixin.registerApp(weiboAppKey,(info)=>{
+            this.WeChatRegInfo = Object.assign({}, info);
+            //console.log("微信 ：",info)
         })
+
+        Weibo.registerApp(weiboAppKey,(info)=>{
+            this.WeiBoRegInfo = Object.assign({}, info);
+            // console.log("微博 ：",info)
+        })
+
     }
 
 
     clickWechat(){
+        Weixin.authorize(null, (data) => {
 
+        })
     }
     clickQQ(){
+        QQ.authorize(null, (data) => {
 
+          //  console.log("data :",data)
+        })
     }
     clickSina(){
-        Weibo.authorize({})
+
+       // Weibo.authorize({scope: "all",redirectUrl:'https://api.weibo.com'}, (data) => {
+          //  console.log("Weibo :",data)
+            this.props.dispatch(getWeiboUserInfo("5852264689","2.00x4VD5G0jxURn9fba53920b0Vexxz",(userInfo)=>{
+                console.log("微博用户信息 : ",userInfo)
+            }))
+       // })
     }
 
     render(){
