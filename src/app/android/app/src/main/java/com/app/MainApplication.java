@@ -7,6 +7,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.rnfs.RNFSPackage;
+import com.umeng.analytics.MobclickAgent;
 import com.yoai.reactnative.social.SocialPackage;
 
 import java.util.Arrays;
@@ -34,4 +35,10 @@ public class MainApplication extends Application implements ReactApplication {
   public ReactNativeHost getReactNativeHost() {
       return mReactNativeHost;
   }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
+    }
 }
