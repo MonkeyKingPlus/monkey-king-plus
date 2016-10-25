@@ -1,5 +1,6 @@
 {
 	"env":"development",	    //development,production
+	"weboUserInfoUrl":"https://api.weibo.com/2/users/show.json",
 	"development":{
 		"host":"http://ec2-54-249-7-123.ap-northeast-1.compute.amazonaws.com:4000/v1"
 	},

@@ -30,7 +30,9 @@ export const store = compose(
 
 const restClient = new RESTfulClient({
 	beforeSend(options, dispatch){
-		options.url = `${$config.host}${options.url}`;
+		if(!options.ignoreHost){
+			options.url = `${$config.host}${options.url}`;
+		}
 	},
 	sending(options,xhr,dispatch){
 		if(dispatch){

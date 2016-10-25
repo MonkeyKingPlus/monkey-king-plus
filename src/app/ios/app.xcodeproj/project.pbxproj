@@ -47,6 +47,7 @@
 		63ADD4D31DB49F14000139EA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63ADD4D21DB49F14000139EA /* QuartzCore.framework */; };
 		63ADD4D51DB49F1D000139EA /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63ADD4D41DB49F1D000139EA /* CoreText.framework */; };
 		63ADD4D71DB49F31000139EA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63ADD4D61DB49F31000139EA /* CoreGraphics.framework */; };
+		63D019F51DBF5A70003C6905 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63D019F41DBF5A70003C6905 /* UMMobClick.framework */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -215,6 +216,7 @@
 		63ADD4D21DB49F14000139EA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		63ADD4D41DB49F1D000139EA /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		63ADD4D61DB49F31000139EA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		63D019F41DBF5A70003C6905 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		B97A8EDB1B4F4E34891A04BD /* libRCTActionSheet.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTActionSheet.a; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				638ADF281DB6690E006354BD /* libWeChatSDK.a in Frameworks */,
 				63ADD49C1DB4799F000139EA /* libRNFS.a in Frameworks */,
 				631901CD1DB3E3AB00D8261E /* CoreTelephony.framework in Frameworks */,
+				63D019F51DBF5A70003C6905 /* UMMobClick.framework in Frameworks */,
 				631901CB1DB3E27700D8261E /* libRCTNetwork.a in Frameworks */,
 				631901AC1DB3DE4500D8261E /* libsqlite3.tbd in Frameworks */,
 				631901AA1DB3DE3600D8261E /* JavaScriptCore.framework in Frameworks */,
@@ -512,6 +515,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				63D019F41DBF5A70003C6905 /* UMMobClick.framework */,
 				638ADEF81DB6690E006354BD /* ios */,
 				63ADD4961DB4757F000139EA /* RNFS.xcodeproj */,
 				631901C51DB3E21300D8261E /* RCTNetwork.xcodeproj */,
@@ -904,6 +908,8 @@
 					"\"$(SRCROOT)/../node_modules/react-native-social-kit/ios/weibo/WeiboSDK\"",
 					"\"$(SRCROOT)/../node_modules/react-native-social-kit/ios/weixin/WeixinSDK\"",
 					"\"$(SRCROOT)/../node_modules/react-native/Libraries/Image\"",
+					"$(PROJECT_DIR)",
+					"\"$(SRCROOT)/UMMobClick.framework\"",
 				);
 				GCC_PREFIX_HEADER = PrefixHeader.pch;
 				HEADER_SEARCH_PATHS = (
@@ -917,6 +923,7 @@
 					"\"$(SRCROOT)/../node_modules/react-native/Libraries/Image\"",
 					"$(SRCROOT)/../node_modules/react-native-social-kit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-social-kit/ios/**",
+					"\"$(SRCROOT)/UMMobClick.framework\"",
 				);
 				INFOPLIST_FILE = app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -926,6 +933,7 @@
 					"\"$(SRCROOT)/../node_modules/react-native-social-kit/ios/weibo/WeiboSDK\"",
 					"\"$(SRCROOT)/../node_modules/react-native-social-kit/ios/weixin/WeixinSDK\"",
 					"\"$(SRCROOT)/../node_modules/react-native/Libraries/Image\"",
+					"\"$(SRCROOT)/UMMobClick.framework\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -951,6 +959,8 @@
 					"\"$(SRCROOT)/../node_modules/react-native-social-kit/ios/weibo/WeiboSDK\"",
 					"\"$(SRCROOT)/../node_modules/react-native-social-kit/ios/weixin/WeixinSDK\"",
 					"\"$(SRCROOT)/../node_modules/react-native/Libraries/Image\"",
+					"$(PROJECT_DIR)",
+					"\"$(SRCROOT)/UMMobClick.framework\"",
 				);
 				GCC_PREFIX_HEADER = PrefixHeader.pch;
 				HEADER_SEARCH_PATHS = (
@@ -964,6 +974,7 @@
 					"\"$(SRCROOT)/../node_modules/react-native/Libraries/Image\"",
 					"$(SRCROOT)/../node_modules/react-native-social-kit/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-social-kit/ios/**",
+					"\"$(SRCROOT)/UMMobClick.framework\"",
 				);
 				INFOPLIST_FILE = app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -973,6 +984,7 @@
 					"\"$(SRCROOT)/../node_modules/react-native-social-kit/ios/weibo/WeiboSDK\"",
 					"\"$(SRCROOT)/../node_modules/react-native-social-kit/ios/weixin/WeixinSDK\"",
 					"\"$(SRCROOT)/../node_modules/react-native/Libraries/Image\"",
+					"\"$(SRCROOT)/UMMobClick.framework\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",

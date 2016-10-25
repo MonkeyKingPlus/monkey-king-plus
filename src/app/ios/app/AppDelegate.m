@@ -16,12 +16,19 @@
 #import "WeiboModule.h"
 #import "QQModule.h"
 
+#import "UMMobClick/MobClick.h"
+
+static NSString* umengKey = @"580f0873a3251161dd0035c6";
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   
   [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+  
+  //设置友盟
+  [MobClick startWithConfigure:UMConfigInstance];
   
   NSURL *jsCodeLocation;
 

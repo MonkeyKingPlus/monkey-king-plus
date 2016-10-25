@@ -11,6 +11,9 @@ import MKPLoadImageView from "react-native-image-view";
 import {getWeiboUserInfo} from  "../../actions/login.action"
 import {connect} from "react-redux";
 
+import Error from "../elements/error";
+import NetworkStatus from "../elements/networkStatus";
+
 const wechatAppID = 'wx458c8642c3333940';
 const weiboAppKey = '728211063';
 const iosQQAppID = '1105759388';
@@ -70,12 +73,12 @@ export default class Login extends BasePage{
     }
     clickSina(){
 
-       // Weibo.authorize({scope: "all",redirectUrl:'https://api.weibo.com'}, (data) => {
-          //  console.log("Weibo :",data)
-            this.props.dispatch(getWeiboUserInfo("5852264689","2.00x4VD5G0jxURn9fba53920b0Vexxz",(userInfo)=>{
+        Weibo.authorize({scope: "all",redirectUrl:'https://api.weibo.com'}, (data) => {
+            console.log("Weibo :",data)
+            this.props.dispatch(getWeiboUserInfo(data.uid,data.accessToken,(userInfo)=>{
                 console.log("微博用户信息 : ",userInfo)
             }))
-       // })
+        })
     }
 
     render(){
@@ -107,6 +110,8 @@ export default class Login extends BasePage{
             </MKPLoadImageView>
            </View>
             <Image style={{marginTop:71,marginHorizontal:0}} source={require('../../themes/assets/icons/MonkeyPlus.png')}/>
+            <Error/>
+            <NetworkStatus/>
         </View>
     }
 }
