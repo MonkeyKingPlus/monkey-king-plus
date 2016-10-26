@@ -8,7 +8,7 @@ import {viewStyles,textStyles,bgColorStyles} from "../../themes/default";
 
 import {Weibo, Weixin, QQ} from 'react-native-social-kit';
 import MKPLoadImageView from "react-native-image-view";
-import {getWeiboUserInfo} from  "../../actions/login.action"
+import {getWeiboUserInfo,loginWithThirdParty} from  "../../actions/login.action"
 import {connect} from "react-redux";
 
 import Error from "../elements/error";
@@ -37,15 +37,13 @@ export default class Login extends BasePage{
         this.WeChatRegInfo={};
         this.WeiBoRegInfo = {};
 
-        let qqID = iosQQAppID;
-
-        if(Platform.OS === 'android'){
-            qqID = androidQQAppID;
+        if(Platform.OS === 'ios'){
+            QQ.registerApp(iosQQAppID,(info)=>{
+                this.QQRegInfo = Object.assign({}, info);
+                console.log("QQ ：",info)
+            })
         }
-        // QQ.registerApp(qqID,(info)=>{
-        //     this.QQRegInfo = Object.assign({}, info);
-        //     console.log("QQ ：",info)
-        // })
+
 
         Weixin.registerApp(weiboAppKey,(info)=>{
             this.WeChatRegInfo = Object.assign({}, info);
@@ -66,17 +64,45 @@ export default class Login extends BasePage{
         })
     }
     clickQQ(){
-        QQ.authorize(null, (data) => {
 
-          //  console.log("data :",data)
-        })
+        this.props.dispatch(loginWithThirdParty("aaa","KK","123",4,(res)=>{
+
+        }))
+
+        // if(Platform.OS === 'ios'){
+        //     QQ.authorize(null, (data) => {
+        //         console.log("QQ 授权data : ",data)
+        //         if(!data.cancel && !data.error){
+        //             this.props.dispatch(loginWithThirdParty(data.openId,data.nickname,data.figureurl_qq_2,4,(res)=>{
+        //
+        //             }))
+        //         }
+        //     })
+        // }
+        // else if(Platform.OS === 'android'){
+        //     QQ.authorize({appId:androidQQAppID,scope:'all'}, (data) => {
+        //         console.log("QQ 授权data : ",data)
+        //         if(!data.cancel && !data.error){
+        //             this.props.dispatch(loginWithThirdParty(data.openId,data.nickname,data.figureurl_qq_2,4,(res)=>{
+        //
+        //             }))
+        //         }
+        //     })
+        // }
+
     }
     clickSina(){
 
         Weibo.authorize({scope: "all",redirectUrl:'https://api.weibo.com'}, (data) => {
             console.log("Weibo :",data)
             this.props.dispatch(getWeiboUserInfo(data.uid,data.accessToken,(userInfo)=>{
-                console.log("微博用户信息 : ",userInfo)
+
+                if(userInfo){
+                    this.props.dispatch(loginWithThirdParty(userInfo.id,userInfo.name,userInfo.avatar_large,2,(res)=>{
+
+                    }))
+                }
+
             }))
         })
     }

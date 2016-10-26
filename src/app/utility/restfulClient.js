@@ -87,6 +87,8 @@ export default class RESTfulClient {
 		if (options.type === "post") {
 			options.headers["content-type"] = "application/json;utf-8";
 		}
+	
+
 		this.ops.beforeSend(options,dispatch);
 		return new Promise((resolve, reject)=> {
 			let req = agent[options.type](options.url).set(options.headers);

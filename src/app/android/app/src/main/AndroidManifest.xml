@@ -33,16 +33,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SplashScreen"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name">
+        </activity>
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
 
-        <!--umeng-->
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="580f081f8f4a9d465c00373c"></meta-data>
-        <!--umeng-->
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="NOT_SURE" />
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
@@ -58,9 +55,16 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
 
-                <data android:scheme="tencent1105704189"/>
+                <data android:scheme="tencent1105764592"/>
             </intent-filter>
         </activity>
-
+        <!--umeng-->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="580f081f8f4a9d465c00373c"></meta-data>
+        <!--umeng-->
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="NOT_SURE" />
     </application>
 </manifest>
