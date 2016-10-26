@@ -8,15 +8,29 @@ export function hasValue(value) {
 }
 
 export function setToken(value) {
+
+    console.log("token = ",value)
     if (value) {
-        return AsyncStorage.setItem($config.tokenName, value);
+        return AsyncStorage.setItem($config.kTokenName, value);
     }
 }
 
 export function token() {
-    return AsyncStorage.getItem($config.tokenName);
+    return AsyncStorage.getItem($config.kTokenName);
 }
 
 export function removeToken() {
-    return AsyncStorage.removeItem($config.tokenName);
+    return AsyncStorage.removeItem($config.kTokenName);
+}
+
+export function  setMyInfo(value) {
+    if (value) {
+        return AsyncStorage.setItem($config.kUserInfo, value);
+    }
+}
+export function myInfo() {
+    return AsyncStorage.getItem($config.kUserInfo);
+}
+export function removeMyInfo() {
+    return AsyncStorage.removeItem($config.kUserInfo);
 }

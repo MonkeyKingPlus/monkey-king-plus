@@ -7,7 +7,7 @@ import {View,Text,TouchableOpacity,Image,Alert,Platform} from "react-native";
 import {viewStyles,textStyles,bgColorStyles} from "../../themes/default";
 
 import {Weibo, Weixin, QQ} from 'react-native-social-kit';
-import MKPLoadImageView from "react-native-image-view";
+import MKPLoadImageView from "mkp-react-native-image-view";
 import {getWeiboUserInfo,loginWithThirdParty} from  "../../actions/login.action"
 import {connect} from "react-redux";
 
@@ -26,10 +26,7 @@ const androidQQAppID = '1105764592';
 })
 
 export default class Login extends BasePage{
-
-
-
-
+    
     constructor(props){
         super(props);
 
@@ -65,30 +62,26 @@ export default class Login extends BasePage{
     }
     clickQQ(){
 
-        this.props.dispatch(loginWithThirdParty("aaa","KK","123",4,(res)=>{
+        if(Platform.OS === 'ios'){
+            QQ.authorize(null, (data) => {
 
-        }))
+                if(!data.cancel && !data.error){
+                    this.props.dispatch(loginWithThirdParty(data.openId,data.nickname,data.figureurl_qq_2,4,(res)=>{
 
-        // if(Platform.OS === 'ios'){
-        //     QQ.authorize(null, (data) => {
-        //         console.log("QQ 授权data : ",data)
-        //         if(!data.cancel && !data.error){
-        //             this.props.dispatch(loginWithThirdParty(data.openId,data.nickname,data.figureurl_qq_2,4,(res)=>{
-        //
-        //             }))
-        //         }
-        //     })
-        // }
-        // else if(Platform.OS === 'android'){
-        //     QQ.authorize({appId:androidQQAppID,scope:'all'}, (data) => {
-        //         console.log("QQ 授权data : ",data)
-        //         if(!data.cancel && !data.error){
-        //             this.props.dispatch(loginWithThirdParty(data.openId,data.nickname,data.figureurl_qq_2,4,(res)=>{
-        //
-        //             }))
-        //         }
-        //     })
-        // }
+                    }))
+                }
+            })
+        }
+        else if(Platform.OS === 'android'){
+            QQ.authorize({appId:androidQQAppID,scope:'all'}, (data) => {
+
+                if(!data.cancel && !data.error){
+                    this.props.dispatch(loginWithThirdParty(data.openId,data.nickname,data.figureurl_qq_2,4,(res)=>{
+
+                    }))
+                }
+            })
+        }
 
     }
     clickSina(){

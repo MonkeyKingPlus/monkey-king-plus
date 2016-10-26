@@ -3,7 +3,9 @@
  */
 
 
-import {setToken,token} from "../utility/helper";
+import {setToken,token,setMyInfo,myInfo} from "../utility/helper";
+
+
 
 
 export function getWeiboUserInfo(uid,accessToken,callback){
@@ -35,6 +37,8 @@ export function getWeiboUserInfo(uid,accessToken,callback){
  * type 认证类型,0=微信;1=微博;2=手机;3=邮箱 ,
  *
  */
+export const ACTION_LOGIN_SUCCESS = "ACTION_LOGIN_SUCCESS";
+export const ACTION_LOGOUT = "ACTION_LOGOUT";
 
 export function loginWithThirdParty(identifier,name,avatar,type,callback) {
 
@@ -55,27 +59,39 @@ export function loginWithThirdParty(identifier,name,avatar,type,callback) {
                 "accept":"application/json; charset=utf-8"
             }
        };
-
-        console.log("conf = ",conf);
         return $req(conf,dispatch).then(res=>{
 
-            console.log("login : ",res)
+            if(res.Code === 0){//登录成功
+
+                setToken(res.header['x-mkp-authentication']);
+                setMyInfo(res.Data);
+                dispatch({
+                    type:LOGIN_IN_SUCCESS
+                });
+            }
             if(callback){
                 callback(res);
             }
-        }).catch(err=>{
 
-            console.log("login failed: ",err)
         });
     }
 }
 
 
-export function isLogin(callBack){
+export function isLogin(){
     return function (dispatch){
         return token().then((value)=>{
-            if(callBack){
-                callBack(value && value.length>0?true:false)
+
+            let isLogin =  value && value.length>0?true:false;
+            if(isLogin){
+                dispatch({
+                    type:LOGIN_IN_SUCCESS
+                });
+            }
+            else{
+                dispatch({
+                    type:LOGIN_OUT
+                });
             }
         })
     }

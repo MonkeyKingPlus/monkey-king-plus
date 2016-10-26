@@ -1,9 +1,10 @@
 {
 	"env":"development",	    //development,production
 	"weboUserInfoUrl":"https://api.weibo.com/2/users/show.json",
-	"tokenName":"mkp_token",
+	"kTokenName":"mkp_token",
+	"kUserInfo":"kUserInfo",
 	"development":{
-		"host":"http://ec2-54-249-7-123.ap-northeast-1.compute.amazonaws.com:3000/v1"
+		"host":"http://192.168.0.69:3000/v1"
 	},
 	"staging":{
 
