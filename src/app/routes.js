@@ -1,5 +1,4 @@
 import Home from "./components/pages/home";
-import Register, {RegisterStep2} from "./components/pages/register";
 import Demo from "./components/pages/demo";
 import ArticleDetail from "./components/pages/articleDetail";
 import Login from  "./components/pages/login"
