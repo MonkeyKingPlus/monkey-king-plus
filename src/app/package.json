@@ -21,6 +21,7 @@
     "react-native-social-kit": "git+https://github.com/kunkunbobo/react-native-social-kit.git",
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
+    "redux-persist": "^4.0.0-alpha6",
     "redux-thunk": "^2.1.0"
   },
   "devDependencies": {

@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from "react";
 import {
 	AppRegistry, Text, Navigator, View, StyleSheet,
-	Image, TouchableHighlight
+	Image, TouchableHighlight,AsyncStorage
 } from "react-native";
 import Router from "mkp-react-native-router";
 import {navigationStyles, viewStyles} from "./themes/default";
@@ -15,6 +15,7 @@ import routes from "./routes";
 import {businessError} from "./actions/error.action";
 import RESTfulClient from "mkp-restful-client";
 import {beginRequest,endRequest} from "./actions/network.action";
+import {persistStore, autoRehydrate} from 'redux-persist';
 
 // combine app config by environment
 window.$config = Object.assign({}, appConfig, {...appConfig[appConfig.env]});
@@ -23,10 +24,13 @@ const RouterWithRedux = connect()(Router);
 
 const middleware = [thunkMiddleware];
 
-export const store = compose(
+const createStoreWithMiddleware=compose(
 	applyMiddleware(...middleware)
-)(createStore)(reducers);
+)(createStore);
 
+export const store = createStoreWithMiddleware(reducers,undefined,autoRehydrate());
+
+persistStore(store,{storage:AsyncStorage});
 
 const restClient = new RESTfulClient({
 	beforeSend(options, dispatch){
