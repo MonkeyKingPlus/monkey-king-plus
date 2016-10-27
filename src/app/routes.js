@@ -12,7 +12,18 @@ const routes = [{
 	routes:[{
 		path:"articleDetail",
 		component:ArticleDetail
-	}]
+	}],
+	onEnter:()=>{
+		//
+		let state=store.getState();
+		console.log(state);
+		if(state){
+			let loginState=state.loginReducer;
+			if(!loginState.$isLogin){
+				return "login";
+			}
+		}
+	}
 },  {
 	path: "login",
 	component: Login,
@@ -22,16 +33,7 @@ const routes = [{
 	title: "Demo",
 	component: Demo,
 	onEnter:()=>{
-		console.log("enter demo")
-		//
-		let state=store.getState();
-		console.log(state.loginReducer);
-		if(state){
-			let loginState=state.loginReducer;
-			if(!loginState.$isLogin){
-				return "login";
-			}
-		}
+
 	}
 }];
 

@@ -19,15 +19,8 @@ const weiboAppKey = '728211063';
 const iosQQAppID = '1105759388';
 const androidQQAppID = '1105764592';
 
-import {isLogin} from "../../actions/login.action"
 
-
-
-@connect(({loginReducer})=>{
-    return {
-        ...loginReducer
-    }
-})
+@connect()
 export default class Login extends BasePage{
     
     constructor(props){
@@ -42,8 +35,6 @@ export default class Login extends BasePage{
         Weibo.registerApp(weiboAppKey,()=>{})
 
     }
-
-
     clickWechat(){
         // Weixin.authorize(null, (data) => {
         //
@@ -56,32 +47,10 @@ export default class Login extends BasePage{
             if(!data.cancel && !data.error){
                 this.props.dispatch(loginWithThirdParty(data.openId,data.nickname,data.figureurl_qq_2,4,(res)=>{
 
-                    this.props.navigator.$replace("home");
+                     this.props.navigator.$replace(this.props.route.$previousPath?this.props.route.$previousPath:'home');
                 }))
             }
         })
-
-        // if(Platform.OS === 'ios'){
-        //     QQ.authorize(null, (data) => {
-        //
-        //         if(!data.cancel && !data.error){
-        //             this.props.dispatch(loginWithThirdParty(data.openId,data.nickname,data.figureurl_qq_2,4,(res)=>{
-        //
-        //                 this.props.navigator.$replace("home");
-        //             }))
-        //         }
-        //     })
-        // }
-        // else if(Platform.OS === 'android'){
-        //     QQ.authorize({appId:androidQQAppID,scope:'all'}, (data) => {
-        //
-        //         if(!data.cancel && !data.error){
-        //             this.props.dispatch(loginWithThirdParty(data.openId,data.nickname,data.figureurl_qq_2,4,(res)=>{
-        //                 this.props.navigator.$replace("home");
-        //             }))
-        //         }
-        //     })
-        // }
 
     }
     clickSina(){
@@ -99,7 +68,7 @@ export default class Login extends BasePage{
                 if(userInfo){
                     this.props.dispatch(loginWithThirdParty( String(userInfo.id),userInfo.name,userInfo.avatar_large,2,(res)=>{
                         console.log("新浪登录成功")
-                        this.props.navigator.$replace("home");
+                        this.props.navigator.$replace(this.props.route.$previousPath?this.props.route.$previousPath:'home');
                     }))
                 }
 

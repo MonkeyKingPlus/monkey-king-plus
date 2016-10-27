@@ -23,7 +23,7 @@ import {businessError} from "../../actions/error.action";
 import {connect} from "react-redux";
 import df from "dateformat";
 import login from "./login"
-import {logout} from "../../actions/login.action"
+import {logout,readLoginInfo,isLogin} from "../../actions/login.action"
 
 
 
@@ -133,20 +133,26 @@ class ItemContent extends BaseElement {
 }
 
 @connect(({loginReducer})=>{
+
+	console.log("home === ",loginReducer);
 	return {
-		...loginReducer
+		isLogin:loginReducer.$isLogin
 	}
 })
 export default class Home extends BasePage {
 
 	constructor(props) {
 		super(props);
+		this.props.dispatch(readLoginInfo());
+		isLogin((login)=>{
+			if(!login){
+				this.props.navigator.$replace("login");
+			}
+		})
 	}
 
 	sceneDidFocus() {
-		if(!this.props.$isLogin){
-			this.props.navigator.$replace("login");
-		}
+		
 		this.props.navigator.$refreshNavBar({
 			renderLeftButton: ()=> {
 				return (
