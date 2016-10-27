@@ -20,20 +20,20 @@ router使用的是[react-native-router](https://github.com/MonkeyKingPlus/react-
 const routes=[{
 	path: "home",
 	title: "Home",
-	component: <Home/>
+	component: Home
 }, {
 	path: "register",
 	title: "Register-Step1",
-	component: <Register/>,
+	component: Register,
 	routes: [{
 		path: "step2",
 		title: "Register-Step2",
-		component: <RegisterStep2/>
+		component: RegisterStep2
 	}]
 }, {
 	path: "demo",
 	title: "Demo",
-	component: <Demo/>
+	component: Demo
 }];
 export default routes;
 ```
