@@ -6,20 +6,22 @@ import {ACTION_LOGIN_SUCCESS,ACTION_LOGOUT} from "../actions/login.action";
 
 
 
-const initialState=createInitialState({
-    $isLogin:false,
-});
+const initialState={
+    $isLogin:null,
+};
 
 export default function reducer(state = initialState, action = {}) {
+   // console.log("收到reucer",action)
     switch (action.type) {
-        case ACTION_LOGIN_SUCCESS:
+        case ACTION_LOGIN_SUCCESS:{
+
             return {
-                ...state,
-                $isLogin:true
+                $isLogin:true,
             };
+        }
+
         case ACTION_LOGOUT:
             return {
-                ...state,
                 $isLogin:false
             };
         default:

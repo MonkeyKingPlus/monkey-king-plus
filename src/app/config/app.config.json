@@ -4,7 +4,7 @@
 	"kTokenName":"mkp_token",
 	"kUserInfo":"kUserInfo",
 	"development":{
-		"host":"http://192.168.0.69:3000/v1"
+		"host":"http://ec2-54-249-7-123.ap-northeast-1.compute.amazonaws.com:3000/v1"
 	},
 	"staging":{
 

@@ -19,6 +19,10 @@ const weiboAppKey = '728211063';
 const iosQQAppID = '1105759388';
 const androidQQAppID = '1105764592';
 
+import {isLogin} from "../../actions/login.action"
+
+
+
 @connect(()=> {
     return {
 
@@ -37,7 +41,6 @@ export default class Login extends BasePage{
         if(Platform.OS === 'ios'){
             QQ.registerApp(iosQQAppID,(info)=>{
                 this.QQRegInfo = Object.assign({}, info);
-                console.log("QQ ：",info)
             })
         }
 
@@ -56,9 +59,13 @@ export default class Login extends BasePage{
 
 
     clickWechat(){
-        Weixin.authorize(null, (data) => {
 
-        })
+        this.props.dispatch(loginWithThirdParty("111","222","333",4,(res)=>{
+
+        }))
+        // Weixin.authorize(null, (data) => {
+        //
+        // })
     }
     clickQQ(){
 

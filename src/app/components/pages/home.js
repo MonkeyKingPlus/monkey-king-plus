@@ -22,6 +22,10 @@ import Error from "../elements/error";
 import {businessError} from "../../actions/error.action";
 import {connect} from "react-redux";
 import df from "dateformat";
+import login from "./login"
+import {isLogin,logout} from "../../actions/login.action"
+
+
 
 const styles = StyleSheet.create({
 	homeView: {
@@ -128,8 +132,29 @@ class ItemContent extends BaseElement {
 	}
 }
 
-@connect()
+@connect(({loginReducer,network})=> {
+
+	console.log("connect = ",loginReducer)
+
+	return {
+		...loginReducer,
+		...network
+	};
+})
 export default class Home extends BasePage {
+
+	constructor(props) {
+		super(props);
+		props.dispatch(isLogin());
+	}
+
+	componentWillReceiveProps(nextProps) {
+			console.log("login = ",nextProps.$isLogin)
+
+		if(!nextProps.$isLogin){
+			this.props.navigator.$replace("login")
+		}
+	}
 
 	sceneDidFocus() {
 		this.props.navigator.$refreshNavBar({
@@ -153,7 +178,7 @@ export default class Home extends BasePage {
 			<View style={[viewStyles.main, styles.homeView]}>
 
 				<TouchableWithoutFeedback onPress={event=> {
-					this.props.navigator.$push("home/articleDetail");
+							this.props.dispatch(logout());
 				}}>
 					<View
 						style={styles.itemView}>

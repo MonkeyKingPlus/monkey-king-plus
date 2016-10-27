@@ -3,7 +3,7 @@
  */
 
 
-import {setToken,token,setMyInfo,myInfo} from "../utility/helper";
+import {setToken,token,removeToken,setMyInfo,myInfo,removeMyInfo} from "../utility/helper";
 
 
 
@@ -61,12 +61,13 @@ export function loginWithThirdParty(identifier,name,avatar,type,callback) {
        };
         return $req(conf,dispatch).then(res=>{
 
-            if(res.Code === 0){//登录成功
+            if(res.body.Code === 0){//登录成功
 
                 setToken(res.header['x-mkp-authentication']);
-                setMyInfo(res.Data);
+                setMyInfo(res.body.Data);
+
                 dispatch({
-                    type:LOGIN_IN_SUCCESS
+                    type:ACTION_LOGIN_SUCCESS
                 });
             }
             if(callback){
@@ -78,6 +79,17 @@ export function loginWithThirdParty(identifier,name,avatar,type,callback) {
 }
 
 
+export function logout() {
+    removeToken();
+    removeMyInfo();
+
+    return function (dispatch){
+        dispatch({
+            type:ACTION_LOGOUT
+        });
+    }
+}
+
 export function isLogin(){
     return function (dispatch){
         return token().then((value)=>{
@@ -85,12 +97,12 @@ export function isLogin(){
             let isLogin =  value && value.length>0?true:false;
             if(isLogin){
                 dispatch({
-                    type:LOGIN_IN_SUCCESS
+                    type:ACTION_LOGIN_SUCCESS
                 });
             }
             else{
                 dispatch({
-                    type:LOGIN_OUT
+                    type:ACTION_LOGOUT
                 });
             }
         })
