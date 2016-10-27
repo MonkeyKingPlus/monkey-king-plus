@@ -23,12 +23,11 @@ import {isLogin} from "../../actions/login.action"
 
 
 
-@connect(()=> {
+@connect(({loginReducer})=>{
     return {
-
-    };
+        ...loginReducer
+    }
 })
-
 export default class Login extends BasePage{
     
     constructor(props){
@@ -75,6 +74,7 @@ export default class Login extends BasePage{
                 if(!data.cancel && !data.error){
                     this.props.dispatch(loginWithThirdParty(data.openId,data.nickname,data.figureurl_qq_2,4,(res)=>{
 
+                        this.props.navigator.$replace("home");
                     }))
                 }
             })
@@ -84,7 +84,7 @@ export default class Login extends BasePage{
 
                 if(!data.cancel && !data.error){
                     this.props.dispatch(loginWithThirdParty(data.openId,data.nickname,data.figureurl_qq_2,4,(res)=>{
-
+                        this.props.navigator.$replace("home");
                     }))
                 }
             })
@@ -94,16 +94,19 @@ export default class Login extends BasePage{
     clickSina(){
 
         Weibo.authorize({scope: "all",redirectUrl:'https://api.weibo.com'}, (data) => {
-            console.log("Weibo :",data)
+
+            if(!data.cancel && !data.error){
             this.props.dispatch(getWeiboUserInfo(data.uid,data.accessToken,(userInfo)=>{
 
                 if(userInfo){
-                    this.props.dispatch(loginWithThirdParty(userInfo.id,userInfo.name,userInfo.avatar_large,2,(res)=>{
-
+                    this.props.dispatch(loginWithThirdParty( String(userInfo.id),userInfo.name,userInfo.avatar_large,2,(res)=>{
+                        console.log("新浪登录成功")
+                        this.props.navigator.$replace("home");
                     }))
                 }
 
             }))
+            }
         })
     }
 

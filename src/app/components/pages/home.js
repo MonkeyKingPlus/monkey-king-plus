@@ -23,7 +23,7 @@ import {businessError} from "../../actions/error.action";
 import {connect} from "react-redux";
 import df from "dateformat";
 import login from "./login"
-import {isLogin,logout} from "../../actions/login.action"
+import {logout} from "../../actions/login.action"
 
 
 
@@ -132,31 +132,21 @@ class ItemContent extends BaseElement {
 	}
 }
 
-@connect(({loginReducer,network})=> {
-
-	console.log("connect = ",loginReducer)
-
+@connect(({loginReducer})=>{
 	return {
-		...loginReducer,
-		...network
-	};
+		...loginReducer
+	}
 })
 export default class Home extends BasePage {
 
 	constructor(props) {
 		super(props);
-		props.dispatch(isLogin());
-	}
-
-	componentWillReceiveProps(nextProps) {
-			console.log("login = ",nextProps.$isLogin)
-
-		if(!nextProps.$isLogin){
-			this.props.navigator.$replace("login")
-		}
 	}
 
 	sceneDidFocus() {
+		if(!this.props.$isLogin){
+			this.props.navigator.$replace("login");
+		}
 		this.props.navigator.$refreshNavBar({
 			renderLeftButton: ()=> {
 				return (
@@ -178,7 +168,7 @@ export default class Home extends BasePage {
 			<View style={[viewStyles.main, styles.homeView]}>
 
 				<TouchableWithoutFeedback onPress={event=> {
-							this.props.dispatch(logout());
+							this.props.navigator.$push("demo");
 				}}>
 					<View
 						style={styles.itemView}>

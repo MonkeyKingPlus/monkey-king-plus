@@ -3,9 +3,6 @@
  */
 
 
-import {setToken,token,removeToken,setMyInfo,myInfo,removeMyInfo} from "../utility/helper";
-
-
 
 
 export function getWeiboUserInfo(uid,accessToken,callback){
@@ -22,7 +19,7 @@ export function getWeiboUserInfo(uid,accessToken,callback){
             return $req(conf,dispatch).then(res=>{
 
                 if(callback){
-                    callback(res);
+                    callback(res.body);
                 }
             }).catch(err=>{
         });
@@ -62,18 +59,15 @@ export function loginWithThirdParty(identifier,name,avatar,type,callback) {
         return $req(conf,dispatch).then(res=>{
 
             if(res.body.Code === 0){//登录成功
-
-                setToken(res.header['x-mkp-authentication']);
-                setMyInfo(res.body.Data);
-
                 dispatch({
-                    type:ACTION_LOGIN_SUCCESS
+                    type:ACTION_LOGIN_SUCCESS,
+                    token:res.header['x-mkp-authentication'],
+                    myUserInfo:res.body.Data,
                 });
+                if(callback){
+                    callback(res);
+                }
             }
-            if(callback){
-                callback(res);
-            }
-
         });
     }
 }
@@ -90,23 +84,5 @@ export function logout() {
     }
 }
 
-export function isLogin(){
-    return function (dispatch){
-        return token().then((value)=>{
-
-            let isLogin =  value && value.length>0?true:false;
-            if(isLogin){
-                dispatch({
-                    type:ACTION_LOGIN_SUCCESS
-                });
-            }
-            else{
-                dispatch({
-                    type:ACTION_LOGOUT
-                });
-            }
-        })
-    }
-}
 
 
