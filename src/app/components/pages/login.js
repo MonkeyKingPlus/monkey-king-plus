@@ -36,6 +36,9 @@ export default class Login extends BasePage{
         if(Platform.OS === 'ios'){
             QQ.registerApp(iosQQAppID,()=>{})
         }
+        else{
+            QQ.registerApp(androidQQAppID,()=>{})
+        }
         Weibo.registerApp(weiboAppKey,()=>{})
 
     }
@@ -48,35 +51,50 @@ export default class Login extends BasePage{
     }
     clickQQ(){
 
-        if(Platform.OS === 'ios'){
-            QQ.authorize(null, (data) => {
+        QQ.authorize(null, (data) => {
 
-                if(!data.cancel && !data.error){
-                    this.props.dispatch(loginWithThirdParty(data.openId,data.nickname,data.figureurl_qq_2,4,(res)=>{
+            if(!data.cancel && !data.error){
+                this.props.dispatch(loginWithThirdParty(data.openId,data.nickname,data.figureurl_qq_2,4,(res)=>{
 
-                        this.props.navigator.$replace("home");
-                    }))
-                }
-            })
-        }
-        else if(Platform.OS === 'android'){
-            QQ.authorize({appId:androidQQAppID,scope:'all'}, (data) => {
+                    this.props.navigator.$replace("home");
+                }))
+            }
+        })
 
-                if(!data.cancel && !data.error){
-                    this.props.dispatch(loginWithThirdParty(data.openId,data.nickname,data.figureurl_qq_2,4,(res)=>{
-                        this.props.navigator.$replace("home");
-                    }))
-                }
-            })
-        }
+        // if(Platform.OS === 'ios'){
+        //     QQ.authorize(null, (data) => {
+        //
+        //         if(!data.cancel && !data.error){
+        //             this.props.dispatch(loginWithThirdParty(data.openId,data.nickname,data.figureurl_qq_2,4,(res)=>{
+        //
+        //                 this.props.navigator.$replace("home");
+        //             }))
+        //         }
+        //     })
+        // }
+        // else if(Platform.OS === 'android'){
+        //     QQ.authorize({appId:androidQQAppID,scope:'all'}, (data) => {
+        //
+        //         if(!data.cancel && !data.error){
+        //             this.props.dispatch(loginWithThirdParty(data.openId,data.nickname,data.figureurl_qq_2,4,(res)=>{
+        //                 this.props.navigator.$replace("home");
+        //             }))
+        //         }
+        //     })
+        // }
 
     }
     clickSina(){
 
-        Weibo.authorize({scope: "all",redirectUrl:'https://api.weibo.com'}, (data) => {
+        Weibo.authorize({scope: "all"}, (data) => {
+
+            console.log("新浪登录成功 = ",data);
 
             if(!data.cancel && !data.error){
             this.props.dispatch(getWeiboUserInfo(data.uid,data.accessToken,(userInfo)=>{
+
+                console.log("新浪获取用户信息成功 = ",data);
+
 
                 if(userInfo){
                     this.props.dispatch(loginWithThirdParty( String(userInfo.id),userInfo.name,userInfo.avatar_large,2,(res)=>{
