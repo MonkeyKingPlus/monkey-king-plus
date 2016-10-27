@@ -33,35 +33,15 @@ export default class Login extends BasePage{
     constructor(props){
         super(props);
 
-        this.QQRegInfo = {};
-        this.WeChatRegInfo={};
-        this.WeiBoRegInfo = {};
-
         if(Platform.OS === 'ios'){
-            QQ.registerApp(iosQQAppID,(info)=>{
-                this.QQRegInfo = Object.assign({}, info);
-            })
+            QQ.registerApp(iosQQAppID,()=>{})
         }
-
-
-        Weixin.registerApp(weiboAppKey,(info)=>{
-            this.WeChatRegInfo = Object.assign({}, info);
-            //console.log("微信 ：",info)
-        })
-
-        Weibo.registerApp(weiboAppKey,(info)=>{
-            this.WeiBoRegInfo = Object.assign({}, info);
-            // console.log("微博 ：",info)
-        })
+        Weibo.registerApp(weiboAppKey,()=>{})
 
     }
 
 
     clickWechat(){
-
-        this.props.dispatch(loginWithThirdParty("111","222","333",4,(res)=>{
-
-        }))
         // Weixin.authorize(null, (data) => {
         //
         // })
