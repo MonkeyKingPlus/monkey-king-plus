@@ -183,7 +183,6 @@ export default class Home extends BasePage {
 						<ItemContent/>
 					</View>
 				</TouchableWithoutFeedback>
-				<Error/>
 			</View>
 		);
 	}
