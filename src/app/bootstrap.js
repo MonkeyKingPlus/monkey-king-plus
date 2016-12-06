@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from "react";
 import {
 	AppRegistry, Text, Navigator, View, StyleSheet,
-	Image, TouchableHighlight,AsyncStorage
+	Image, TouchableHighlight, AsyncStorage
 } from "react-native";
 import Router from "mkp-react-native-router";
 import {navigationStyles, viewStyles} from "./themes/default";
@@ -14,7 +14,7 @@ import appConfig from "./config/app.config.json";
 import routes from "./routes";
 import {businessError} from "./actions/error.action";
 import RESTfulClient from "mkp-restful-client";
-import {beginRequest,endRequest} from "./actions/network.action";
+import {beginRequest, endRequest} from "./actions/network.action";
 import {persistStore, autoRehydrate} from 'redux-persist';
 
 // combine app config by environment
@@ -24,32 +24,32 @@ const RouterWithRedux = connect()(Router);
 
 const middleware = [thunkMiddleware];
 
-const createStoreWithMiddleware=compose(
+const createStoreWithMiddleware = compose(
 	applyMiddleware(...middleware)
 )(createStore);
 
-export const store = createStoreWithMiddleware(reducers,undefined,autoRehydrate());
+export const store = createStoreWithMiddleware(reducers, undefined, autoRehydrate());
 
-persistStore(store,{storage:AsyncStorage});
+persistStore(store, {storage: AsyncStorage});
 
 const restClient = new RESTfulClient({
 	beforeSend(options, dispatch){
-		if(!options.ignoreHost){
+		if (!options.ignoreHost) {
 			options.url = `${$config.host}${options.url}`;
 		}
 	},
-	sending(options,xhr,dispatch){
-		if(dispatch){
-			dispatch(beginRequest(options,xhr));
+	sending(options, xhr, dispatch){
+		if (dispatch) {
+			dispatch(beginRequest(options, xhr));
 		}
 	},
-	received(options,response,xhr,dispatch){
-		if(dispatch){
+	received(options, response, xhr, dispatch){
+		if (dispatch) {
 			dispatch(endRequest(options));
 		}
 	},
 	// success(){},
-	error(err,dispatch){
+	error(err, dispatch){
 		dispatch(businessError(err.message || "系统错误"));
 	},
 	// complete(err,response,dispatch){
@@ -69,19 +69,19 @@ export default class Bootstrap extends Component {
 			<View style={styles.container}>
 				<Provider store={store}>
 					<Menu>
-					<RouterWithRedux
-						navigationBarStyle={navigationStyles.navigationBar}
-						onChange={(type)=> {
+						<RouterWithRedux
+							navigationBarStyle={navigationStyles.navigationBar}
+							onChange={(type)=> {
 								//console.log(type);
 							}}
-						renderTitle={(route)=> {
+							renderTitle={(route)=> {
 								return (
 									<View style={[navigationStyles.base]}>
 										<Text style={[navigationStyles.title]}>{route.title}</Text>
 									</View>
 								);
 							}}
-						renderLeftButton={(route, navigator, index)=> {
+							renderLeftButton={(route, navigator, index)=> {
 								if (index > 0) {
 									return (
 										<TouchableHighlight
@@ -95,8 +95,8 @@ export default class Bootstrap extends Component {
 								}
 								return null;
 							}}
-						routes={routes}></RouterWithRedux>
-				</Menu>
+							routes={routes}></RouterWithRedux>
+					</Menu>
 				</Provider>
 			</View>
 		);
