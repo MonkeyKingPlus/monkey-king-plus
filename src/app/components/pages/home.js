@@ -144,11 +144,11 @@ export default class Home extends BasePage {
 	constructor(props) {
 		super(props);
 		this.props.dispatch(readLoginInfo());
-		isLogin((login)=>{
-			if(!login){
-				this.props.navigator.$replace("login");
-			}
-		})
+		// isLogin((login)=>{
+		// 	if(!login){
+		// 		this.props.navigator.$replace("login");
+		// 	}
+		// })
 	}
 
 	sceneDidFocus() {
